@@ -14,6 +14,12 @@ public class EncyclopediaManager : MonoBehaviour
 
     public Image plantImage;
     public TMP_Text plantNameText;
+    public TMP_Text environmentText;
+    public TMP_Text soilText;
+    public TMP_Text sunlightText;
+    public TMP_Text wateringText;
+    public TMP_Text repottingText;
+    public TMP_Text potsizeText;
 
     private int selectionIndex;
     private bool showingEncyclopedia;
@@ -25,7 +31,7 @@ public class EncyclopediaManager : MonoBehaviour
 
         selectionIndex = 0;
         showingEncyclopedia = false;
-        ToggleEncyclopedia();
+        HideEncyclopedia();
     }
 
     public void ToggleEncyclopedia() {
@@ -51,6 +57,12 @@ public class EncyclopediaManager : MonoBehaviour
         plantImage.preserveAspect = true;
         plantImage.sprite = currentPlant.PlantImage;
         plantNameText.text = currentPlant.name;
+        environmentText.text = "Typical Environment: " + currentPlant.description.environmentInfo;
+        soilText.text = "Soil Info: " + currentPlant.description.soilInfo;
+        sunlightText.text = "Sunlight Needs: " + currentPlant.description.sunlightInfo;
+        wateringText.text = "Watering Needs: " + currentPlant.description.wateringInfo;
+        repottingText.text = "Repotting Needs: " + currentPlant.description.repottingInfo;
+        potsizeText.text = "Typical Pot Size: " + currentPlant.description.pottingInfo;
     }
 
     // Swaps to the next item in the list

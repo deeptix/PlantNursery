@@ -1,0 +1,28 @@
+{
+    "plants" :[
+        {
+            "name": "Donkey's/Burro's Tail",
+            "imageName": "DonkeysTail",
+            "description": {
+                "environmentInfo": "Native to Honduras and Mexico (temperate regions)",
+                "soilInfo": "Well-draining, sandy, and gritty soil; fertilizer is not necessary , but can feed a weak solution of cactus fertilizer two or three times through spring and summer. In winter, don't feed at all.",
+                "sunlightInfo": "Part sun and part shade, but they like bright light",
+                "wateringInfo": "Every three weeks (or once soil has dried up)",
+                "repottingInfo": "Once the plant has completely filled up the pot (should generally avoid repotting unless necessary)",
+                "pottingInfo": "6-8 inch pot"
+            }
+        },
+        {
+            "name": "Spider Plant",
+            "imageName": "SpiderPlant",
+            "description": {
+                "environmentInfo": "Native to tropical and subtropical regions of Africa (relatively dry)",
+                "soilInfo": "Loamy, moist, and well-drained soil; fertilizer is not necessary but small doses of a balanced 10-10-10 fertilizer every 6-8 weeks can boost growth",
+                "sunlightInfo": "Part sun and part shade, but they prefer bright, indirect light",
+                "wateringInfo": "About once a week (or once soil has dried up)",
+                "repottingInfo": "Repot when the roots are big enough",
+                "pottingInfo": "Just slightly larger than the plant's root"
+            }
+        }
+    ]
+}

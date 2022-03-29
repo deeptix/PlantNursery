@@ -26,10 +26,13 @@ public class NoteManager : MonoBehaviour
     int newSortingOrder;
     float currentTime = 0.0f;
     bool typing = false;
-    Canvas canvas;
+
+    private Canvas canvas;
+    private GameUIManager gameUIManager;
 
     void Start() {
         canvas = GetComponent<Canvas>();
+        gameUIManager = GameObject.Find("GameUIManager").GetComponent<GameUIManager>();
 
         oldPos = transform.position;
         oldScale = transform.localScale;
@@ -74,6 +77,8 @@ public class NoteManager : MonoBehaviour
         SetNoteUI();
         noteInput.GetComponent<TMP_InputField>().text = noteText.GetComponent<TMP_Text>().text;
         canvas.sortingOrder = newSortingOrder;
+
+        gameUIManager.HideToolbar();
     }
 
     public void ShrinkNote() {
@@ -90,5 +95,7 @@ public class NoteManager : MonoBehaviour
         typing = false;
         SetNoteUI();
         noteText.GetComponent<TMP_Text>().text = noteInput.GetComponent<TMP_InputField>().text;
+
+        gameUIManager.ShowToolbar();
     }
 }

@@ -2607,6 +2607,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: pot
       objectReference: {fileID: 0}
+    - target: {fileID: 5466579930728398840, guid: ff42f2310651348008b08e5ec0d9e4f9, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5466579930728398843, guid: ff42f2310651348008b08e5ec0d9e4f9, type: 3}
       propertyPath: m_Camera
       value: 

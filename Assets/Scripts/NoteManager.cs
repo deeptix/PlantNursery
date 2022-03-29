@@ -7,7 +7,7 @@ using TMPro;
 public class NoteManager : MonoBehaviour
 {
     public float finalScale = 6.7f;
-    public float transformTime = 1.5f;
+    public float transformTime = 0.2f;
 
     public GameObject noteText;
     public GameObject noteInput;
@@ -19,12 +19,18 @@ public class NoteManager : MonoBehaviour
     Vector3 oldScale;
 
     bool currentlyMoving = false;
+    Vector3 startPos;
     Vector3 newPos;
+    Vector3 startScale;
     Vector3 newScale;
+    int newSortingOrder;
     float currentTime = 0.0f;
     bool typing = false;
+    Canvas canvas;
 
     void Start() {
+        canvas = GetComponent<Canvas>();
+
         oldPos = transform.position;
         oldScale = transform.localScale;
         typing = false;
@@ -33,12 +39,13 @@ public class NoteManager : MonoBehaviour
 
     void Update() {
         if (currentlyMoving) {
-            transform.position = Vector3.Lerp(transform.position, newPos, currentTime / transformTime);
-            transform.localScale = Vector3.Lerp(transform.localScale, newScale, currentTime / transformTime);
+            transform.position = Vector3.Slerp(startPos, newPos, currentTime / transformTime);
+            transform.localScale = Vector3.Slerp(startScale, newScale, currentTime / transformTime);
             currentTime += Time.deltaTime;
             if (currentTime >= transformTime) {
                 transform.position = newPos;
                 transform.localScale = newScale;
+                canvas.sortingOrder = newSortingOrder;
                 currentlyMoving = false;
             }
         }
@@ -52,9 +59,13 @@ public class NoteManager : MonoBehaviour
     }
 
     public void ExpandNote() {
+        startPos = transform.position;
+        startScale = transform.localScale;
+
         newPos = UnityEngine.Camera.main.transform.position;
         newPos.z = 0;
         newScale = new Vector3(finalScale, finalScale, finalScale);
+        newSortingOrder = 5;
 
         currentTime = 0.0f;
         currentlyMoving = true;
@@ -62,12 +73,16 @@ public class NoteManager : MonoBehaviour
         typing = true;
         SetNoteUI();
         noteInput.GetComponent<TMP_InputField>().text = noteText.GetComponent<TMP_Text>().text;
-        GetComponent<Canvas>().sortingOrder = 5;
+        canvas.sortingOrder = newSortingOrder;
     }
 
     public void ShrinkNote() {
+        startPos = transform.position;
+        startScale = transform.localScale;
+
         newPos = oldPos;
         newScale = oldScale;
+        newSortingOrder = 1;
 
         currentTime = 0.0f;
         currentlyMoving = true;
@@ -75,6 +90,5 @@ public class NoteManager : MonoBehaviour
         typing = false;
         SetNoteUI();
         noteText.GetComponent<TMP_Text>().text = noteInput.GetComponent<TMP_InputField>().text;
-        GetComponent<Canvas>().sortingOrder = 1;
     }
 }

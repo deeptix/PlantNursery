@@ -23,32 +23,25 @@ public class EncyclopediaManager : MonoBehaviour
 
     private int selectionIndex;
     private bool showingEncyclopedia;
+    private PhoneManager phoneManager;
 
     void Start() {
         // Loading track info from a JSON file
         TextAsset plantFile = Resources.Load<TextAsset>(plantsFilePath);
         plants = JsonUtility.FromJson<Plants>(plantFile.ToString()).plants;
+        phoneManager = GameObject.Find("PhoneManager").GetComponent<PhoneManager>();
 
         selectionIndex = 0;
         showingEncyclopedia = false;
         HideEncyclopedia();
     }
 
-    public void ToggleEncyclopedia() {
-        showingEncyclopedia = !showingEncyclopedia;
-        if (showingEncyclopedia) {
-            ShowEncyclopedia();
-        } else {
-            HideEncyclopedia();
-        }
-    }
-
-    private void ShowEncyclopedia() {
+    public void ShowEncyclopedia() {
         setCurrentScene();
         encyclopediaPanel.SetActive(true);
     }
 
-    private void HideEncyclopedia() {
+    public void HideEncyclopedia() {
         encyclopediaPanel.SetActive(false);
     }
 

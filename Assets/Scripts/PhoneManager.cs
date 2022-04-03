@@ -5,6 +5,8 @@ using UnityEngine;
 public class PhoneManager : MonoBehaviour
 {
     public GameObject phone;
+    public GameObject phoneCamera;
+    public GameObject phoneButton;
 
     private bool showingPhone;
     private GameUIManager gameUIManager;
@@ -14,6 +16,7 @@ public class PhoneManager : MonoBehaviour
         gameUIManager = GameObject.Find("GameUIManager").GetComponent<GameUIManager>();
 
         showingPhone = false;
+        HidePhoneCamera();
         HidePhone();
     }
 
@@ -21,18 +24,29 @@ public class PhoneManager : MonoBehaviour
         showingPhone = !showingPhone;
         if (!showingPhone) {
             HidePhone();
+            gameUIManager.ShowToolbar();
         } else {
             ShowPhone();
+            gameUIManager.HideToolbar();
         }
     }
 
-    void HidePhone() {
+    public void HidePhone() {
         phone.SetActive(false); //TODO: animation
-        gameUIManager.ShowToolbar();
     }
 
-    void ShowPhone() {
+    public void ShowPhone() {
         phone.SetActive(true); //TODO: animation
-        gameUIManager.HideToolbar();
+    }
+
+    public void ShowPhoneCamera() {
+        phoneCamera.SetActive(true); //TODO: animation
+        phoneCamera.GetComponent<CameraPhone>().GoToDefaultPosition();
+        phoneButton.SetActive(false);
+    }
+
+    public void HidePhoneCamera() {
+        phoneCamera.SetActive(false); //TODO: animation
+        phoneButton.SetActive(true);
     }
 }

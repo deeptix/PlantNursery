@@ -6,6 +6,7 @@ using TMPro;
 
 public class CameraPhone : MonoBehaviour
 {
+    public GameObject phone;
     public TMP_Text SearchText;
     public TMP_Text PlantNameText;
     public Button SearchButton;
@@ -17,6 +18,7 @@ public class CameraPhone : MonoBehaviour
     private Vector3 defaultPosition;
     private PhoneManager phoneManager;
     private EncyclopediaManager encyclopediaManager;
+    private bool resetComplete = false;
 
     public void OnMouseDown()
     {
@@ -30,7 +32,7 @@ public class CameraPhone : MonoBehaviour
         isDragging = false;
     }
 
-    void Start() 
+    void Start()
     {
         phoneManager = GameObject.Find("PhoneManager").GetComponent<PhoneManager>();
         encyclopediaManager = GameObject.Find("EncyclopediaManager").GetComponent<EncyclopediaManager>();
@@ -39,20 +41,24 @@ public class CameraPhone : MonoBehaviour
         SetDefaultUI();
     }
 
-    public void GoToDefaultPosition() 
+    public void GoToDefaultPosition()
     {
         transform.position = defaultPosition;
         SetDefaultUI();
+        resetComplete = true;
     }
 
     void Update()
     {
-        Vector2 phoneOnScreenPos = Camera.main.WorldToScreenPoint(transform.position);
-        if (phoneOnScreenPos.x < tolerance || phoneOnScreenPos.x > Screen.width - tolerance ||
-            phoneOnScreenPos.y < tolerance || phoneOnScreenPos.y > Screen.height - tolerance) 
-        {
-            phoneManager.HidePhoneCamera();
-            phoneManager.ShowPhone();
+        if (resetComplete) {
+            Vector2 phoneOnScreenPos = Camera.main.WorldToScreenPoint(transform.position);
+            if (phoneOnScreenPos.x < tolerance || phoneOnScreenPos.x > Screen.width - tolerance ||
+                phoneOnScreenPos.y < tolerance || phoneOnScreenPos.y > Screen.height - tolerance)
+            {
+                phoneManager.HidePhoneCamera();
+                phoneManager.ShowPhone();
+                resetComplete = false;
+            }
         }
 
         if (isDragging) {
@@ -85,5 +91,16 @@ public class CameraPhone : MonoBehaviour
         phoneManager.HidePhoneCamera();
         encyclopediaManager.ShowEncyclopedia();
         //TODO: Go to encyclopedia page for the current plant
+
+        resetComplete = false;
+    }
+
+    public void HidePhone() {
+        phone.SetActive(false);
+    }
+
+    public void ShowPhone() {
+        GoToDefaultPosition();
+        phone.SetActive(true);
     }
 }

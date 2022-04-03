@@ -5,12 +5,12 @@ using UnityEngine;
 public class PhoneManager : MonoBehaviour
 {
     public GameObject phone;
-    public GameObject phoneCamera;
+    public CameraPhone cameraPhone;
     public GameObject phoneButton;
 
     private bool showingPhone;
     private GameUIManager gameUIManager;
-    
+
     void Start()
     {
         gameUIManager = GameObject.Find("GameUIManager").GetComponent<GameUIManager>();
@@ -40,13 +40,12 @@ public class PhoneManager : MonoBehaviour
     }
 
     public void ShowPhoneCamera() {
-        phoneCamera.SetActive(true); //TODO: animation
-        phoneCamera.GetComponent<CameraPhone>().GoToDefaultPosition();
+        cameraPhone.ShowPhone();
         phoneButton.SetActive(false);
     }
 
     public void HidePhoneCamera() {
-        phoneCamera.SetActive(false); //TODO: animation
+        cameraPhone.HidePhone();
         phoneButton.SetActive(true);
     }
 }

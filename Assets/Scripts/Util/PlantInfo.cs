@@ -6,6 +6,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Various soil types plants require
+public enum SoilTypes {
+    Loamy,
+    Sandy, 
+    Peaty,
+    Clay,
+    Chalky, 
+    Silty
+}
+
+// Various amounts of sunlight plants require
+public enum Sunlight {
+    Sun,        // Full sunlight
+    Partial,    // Partial shade/sunlight
+    Shade       // Full shade
+}
+
 [System.Serializable]
 public class PlantDescription 
 {
@@ -22,9 +39,14 @@ public class Plant
 {
     public string name;                     // Name of the plant
     public string imageName;                // Name of the image for the plant
-    public PlantDescription description;    // All the English description for the plant
+    public PlantDescription description;    // All the English description for the plant 
 
     // Insert any other numbers required for the plant
+    // public SoilTypes soil;
+    // public Sunlight sun;
+    public int wateringSchedule;            // water every wateringSchedule weeks
+    public double minWater;                 // minimum amount of water that plant needs
+    public double maxWater;                 // maximum amount of water that plant can have
 
     private const string resourceFilePath = "Images";
 

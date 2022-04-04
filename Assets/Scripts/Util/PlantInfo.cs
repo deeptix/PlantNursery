@@ -45,8 +45,8 @@ public class Plant
     // public SoilTypes soil;
     // public Sunlight sun;
     public int wateringSchedule;            // water every wateringSchedule weeks
-    public double minWater;                 // minimum amount of water that plant needs
-    public double maxWater;                 // maximum amount of water that plant can have
+    public float minWater;                 // minimum amount of water that plant needs
+    public float maxWater;                 // maximum amount of water that plant can have
 
     private const string resourceFilePath = "Images";
 

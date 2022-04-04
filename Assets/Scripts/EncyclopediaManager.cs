@@ -9,9 +9,6 @@ public class EncyclopediaManager : MonoBehaviour
 {
     public GameObject encyclopediaPanel;
 
-    private string plantsFilePath = "plants";
-    private Plant[] plants;
-
     public Image plantImage;
     public TMP_Text plantNameText;
     public TMP_Text environmentText;
@@ -21,15 +18,17 @@ public class EncyclopediaManager : MonoBehaviour
     public TMP_Text repottingText;
     public TMP_Text potsizeText;
 
+    private Plant[] plants;
     private int selectionIndex;
     private bool showingEncyclopedia;
     private PhoneManager phoneManager;
+    private GameManager gameManager;
 
     void Start() {
         // Loading track info from a JSON file
-        TextAsset plantFile = Resources.Load<TextAsset>(plantsFilePath);
-        plants = JsonUtility.FromJson<Plants>(plantFile.ToString()).plants;
         phoneManager = GameObject.Find("PhoneManager").GetComponent<PhoneManager>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        plants = gameManager.GetAllPlants();
 
         selectionIndex = 0;
         showingEncyclopedia = false;

@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - DropZone
+  - Day
   layers:
   - Default
   - TransparentFX
@@ -39,9 +40,18 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+<<<<<<< HEAD
   - name: Background
     uniqueID: 955746435
     locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
+=======
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 1139329419
+    locked: 0
+>>>>>>> 87a6b647ca0ef84a2a8d219d653d60160c375c4d

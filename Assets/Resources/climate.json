@@ -1,0 +1,14 @@
+{
+    "climates" :[
+        {
+            "region": "Arizona",
+            "temperature": "90",
+            "humidity": "60%"
+        },
+        {
+            "region": "Florida",
+            "temperature": "85",
+            "humidity": "80%"
+        }
+    ]
+}

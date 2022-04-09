@@ -24,7 +24,7 @@ public class PlantStateManager : MonoBehaviour
 {
 
     private GameManager gameManager;
-    public string plantName;        // Plant name
+    public PlantType plantType;        // Plant type
     public Plant requirements;      // Static care requirements for plant
     public int age;                 // Age of plant in days
     public Health healthState;      // Dynamic health state of plant
@@ -44,7 +44,7 @@ public class PlantStateManager : MonoBehaviour
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         // Store plant care requirements 
-        if (!gameManager.GetPlant(plantName, out requirements)) {
+        if (!gameManager.GetPlant(plantType, out requirements)) {
             Debug.Log("Could not find plant.");
         }
         // Plant starts as a healthy sprout

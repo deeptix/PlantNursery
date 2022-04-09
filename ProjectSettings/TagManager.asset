@@ -3,12 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Day
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Plants
   - Water
   - UI
   - 
@@ -38,6 +39,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 997263347
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

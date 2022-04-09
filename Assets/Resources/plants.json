@@ -1,7 +1,7 @@
 {
     "plants" :[
         {
-            "name": "Donkey's/Burro's Tail",
+            "name": "DonkeysTail",
             "imageName": "DonkeysTail",
             "description": {
                 "environmentInfo": "Native to Honduras and Mexico (temperate regions)",
@@ -16,7 +16,7 @@
             "maxWater": 8
         },
         {
-            "name": "Spider Plant",
+            "name": "SpiderPlant",
             "imageName": "SpiderPlant",
             "description": {
                 "environmentInfo": "Native to tropical and subtropical regions of Africa (relatively dry)",

@@ -41,9 +41,6 @@ public class PlantStateManager : MonoBehaviour
     public Sunlight sun;            // Type of sun plant is in
     // public int temp;             // Temperature of plant environment
 
-    /* TESTING */
-    // public Button oneDayButton; 
-
     void Awake() {
         plantSprites = Resources.LoadAll<Sprite>(plantType.ToString());
         // Debug.Log("Loaded " + plantSprites.Length + " sprites!");
@@ -87,9 +84,6 @@ public class PlantStateManager : MonoBehaviour
 
         // Adding listeners
         EventBus.AddListener(EventTypes.DayPassed, new CallBack<int>(passTime));
-
-        /* TESTING */
-        // oneDayButton.onClick.AddListener(delegate {passTime(1);});
     }
 
     // Updates Growth and Health states based on plant care + number of days skipped
@@ -120,6 +114,7 @@ public class PlantStateManager : MonoBehaviour
     // Note: addWaterAmount can be the time duration in which the user watered the plant for
     public void waterPlant(float addWaterAmount) {
         water = Math.Min(water + addWaterAmount, 10);
+        displayStats();
     }
 
     // Updates sunlight provided when user moves the plant

@@ -24,6 +24,17 @@ public class Water : MonoBehaviour
         mousePosition.z = 0;
         transform.position = mousePosition;
         Quaternion originalRotation = fallingWater.transform.rotation;
+
+        // TODO: check if falling water is colliding with plant
+        // nikita: i used fallingWater.transform.position but I don't think this is accurate
+        LayerMask mask = LayerMask.GetMask("Plants");
+        RaycastHit2D hit = Physics2D.Raycast(fallingWater.transform.position, Vector2.zero, Mathf.Infinity, mask);
+
+        if (hit.collider != null)
+        {
+            PlantStateManager plant = hit.transform.gameObject.GetComponent<PlantStateManager>();
+            plant.waterPlant(Time.deltaTime);
+        }
     }
 
     void OnTriggerEnter2D(Collider2D col)

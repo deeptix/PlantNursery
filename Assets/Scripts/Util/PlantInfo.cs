@@ -9,7 +9,8 @@ using UnityEngine;
 
 public enum PlantType {
     DonkeysTail,
-    SpiderPlant
+    SpiderPlant,
+    Scallion
 }
 
 // Various soil types plants require

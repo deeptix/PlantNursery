@@ -11,9 +11,12 @@
                 "repottingInfo": "Once the plant has completely filled up the pot (should generally avoid repotting unless necessary)",
                 "pottingInfo": "6-8 inch pot"
             },
+            "soil": "Sandy",
+            "sun": "Partial",
             "wateringSchedule": 1,
             "minWater": 6,
-            "maxWater": 8
+            "maxWater": 8,
+            "growthSchedule": ["3", "9", "18", "32"]
         },
         {
             "name": "SpiderPlant",
@@ -26,9 +29,12 @@
                 "repottingInfo": "Repot when the roots are big enough",
                 "pottingInfo": "Just slightly larger than the plant's root"
             },
+            "soil": "Loamy",
+            "sun": "Partial",
             "wateringSchedule": 1,
             "minWater": 6,
-            "maxWater": 8
+            "maxWater": 8,
+            "growthSchedule": ["2", "4", "8", "16"]
         },
         {
             "name": "Scallion",
@@ -41,9 +47,12 @@
                 "repottingInfo": "Can replant about every month for a continual harvest",
                 "pottingInfo": "Shallow pot that is no more than 6-8 inches deep"
             },
+            "soil": "Loamy",
+            "sun": "Full",
             "wateringSchedule": 1,
             "minWater": 6,
-            "maxWater": 8
+            "maxWater": 8,
+            "growthSchedule": ["2", "4", "8", "12"]
         }
     ]
 }

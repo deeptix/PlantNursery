@@ -47,7 +47,6 @@ public class PlantStateManager : MonoBehaviour
         if (!gameManager.GetPlant(plantName, out requirements)) {
             Debug.Log("Could not find plant.");
         }
-
         // Plant starts as a healthy sprout
         age = 0;
         healthState = Health.Healthy;
@@ -83,7 +82,7 @@ public class PlantStateManager : MonoBehaviour
     // Updates amount of water plant holds when user waters the plant
     // A plant can have a maximum of 10 water
     public void waterPlant(float addWaterAmount) {
-        water = Math.Max(water + addWaterAmount, 10);
+        water = Math.Min(water + addWaterAmount, 10);
     }
 
     /* Functions to update plant states based on user actions
@@ -110,21 +109,14 @@ public class PlantStateManager : MonoBehaviour
     }
 
     /* TESTING WATERING */
-    // public void OnPointerDown(PointerEventData eventData) {
-    //     // if (!watering) {
-    //     //     watering = true;
-    //     //     durationWaterTime = 0;
-    //     // } else {
-    //     //     durationWaterTime += Time.deltaTime;
-    //     // }
-    //     water += Time.deltaTime;
-    // }
+    void Update() {
+        if (Input.GetMouseButton(0)) {
+            waterPlant(Time.deltaTime);
+        }
+    }
 
-    // public void OnPointerUp(PointerEventData eventData) {
-    //     Debug.Log("water: " + water);
-    // }
-
-    void OnMouseDown() {
-        water += Time.deltaTime;
+    void OnGUI()
+    {
+        GUI.Label(new Rect(10, 10, 100, 20), water.ToString());
     }
 }

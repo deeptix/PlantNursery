@@ -13,7 +13,8 @@ public enum SoilTypes {
     Peaty,
     Clay,
     Chalky, 
-    Silty
+    Silty,
+    None
 }
 
 // Various amounts of sunlight plants require
@@ -42,11 +43,14 @@ public class Plant
     public PlantDescription description;    // All the English description for the plant 
 
     // Insert any other numbers required for the plant
-    // public SoilTypes soil;
-    // public Sunlight sun;
-    public int wateringSchedule;            // water every wateringSchedule weeks
-    public float minWater;                 // minimum amount of water that plant needs
-    public float maxWater;                 // maximum amount of water that plant can have
+    public SoilTypes soil;                  // Soil required for plant
+    public Sunlight sun;                    // Sunlight required for plant
+    // public int minTemp;                  // Minimum acceptable temperature for plant
+    // public int maxTemp;                  // Maximum acceptable temperature for plant
+    public int wateringSchedule;            // Water every wateringSchedule weeks
+    public float minWater;                  // Minimum amount of water that plant needs
+    public float maxWater;                  // Maximum amount of water that plant can have
+    public int[] growthSchedule;            // Number of days spent in healthy state before growing
 
     private const string resourceFilePath = "Images";
 

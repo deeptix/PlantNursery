@@ -15,7 +15,7 @@ public class SkipDay : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameManager = GameObject.Find("Game Manager");
+        GameManager = GameObject.Find("GameManager");
         this.GetComponent<Button>().onClick.AddListener(IterateDate);
 
         Initialize();

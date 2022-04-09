@@ -12,7 +12,7 @@ public class UpdateDay : MonoBehaviour, IPointerClickHandler
 
     void Start()
     { 
-        GameManager = GameObject.Find("Game Manager");
+        GameManager = GameObject.Find("GameManager");
 
         // Have sped up animations (multiple) for passing days
         /*skipButton = GameObject.Find("Skip Day Button");

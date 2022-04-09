@@ -4,7 +4,13 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
+
+public enum PlantType {
+    DonkeysTail,
+    SpiderPlant
+}
 
 [System.Serializable]
 public class PlantDescription 
@@ -24,7 +30,14 @@ public class Plant
     public string imageName;                // Name of the image for the plant
     public PlantDescription description;    // All the English description for the plant
 
+    public PlantType plantType {
+        get {
+            return (PlantType)Enum.Parse(typeof(PlantType), name); 
+        }
+    }
+
     // Insert any other numbers required for the plant
+
 
     private const string resourceFilePath = "Images";
 

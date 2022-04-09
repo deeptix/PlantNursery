@@ -29,6 +29,7 @@ public class PlantStateManager : MonoBehaviour
     private RectTransform rectTransform; 
     public TMP_Text stats;
     public string plantName;        // Plant name
+    public PlantType plantType;        // Plant type
     public Plant requirements;      // Static care requirements for plant
     public int age;                 // Age of plant in days
     private int ageHealthy;         // Age of plant in a healthy state
@@ -49,7 +50,7 @@ public class PlantStateManager : MonoBehaviour
         rectTransform = GetComponent<RectTransform>();
 
         // Store plant care requirements 
-        if (!gameManager.GetPlant(plantName, out requirements)) {
+        if (!gameManager.GetPlant(plantType, out requirements)) {
             Debug.Log("Could not find plant.");
         }
         // Plant starts as a healthy sprout with no soil

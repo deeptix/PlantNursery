@@ -3,12 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Day
+  - DropZone
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Plants
   - Water
   - UI
   - 
@@ -38,6 +40,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Environment
+    uniqueID: 2548323241
+    locked: 0
+  - name: Background
+    uniqueID: 3197928859
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

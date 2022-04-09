@@ -24,11 +24,20 @@ public class EncyclopediaManager : MonoBehaviour
     private PhoneManager phoneManager;
     private GameManager gameManager;
 
+    private Dictionary<PlantType, int> plantIndices;
+
     void Start() {
         // Loading track info from a JSON file
         phoneManager = GameObject.Find("PhoneManager").GetComponent<PhoneManager>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         plants = gameManager.GetAllPlants();
+
+        plantIndices = new Dictionary<PlantType, int>();
+        int i = 0;
+        foreach (Plant plant in plants) {
+            plantIndices.Add(plant.plantType, i);
+            i++;
+        }
 
         selectionIndex = 0;
         showingEncyclopedia = false;
@@ -66,6 +75,16 @@ public class EncyclopediaManager : MonoBehaviour
     // Swaps to the previous item in the list
     public void prevPlant() {
         selectionIndex = (selectionIndex + plants.Length - 1) % plants.Length;
+        setCurrentScene();
+    }
+
+    public void GoToPage(PlantType plantType) {
+        int index;
+        if (!plantIndices.TryGetValue(plantType, out index)) {
+            return;
+        }
+
+        selectionIndex = index;
         setCurrentScene();
     }
 }

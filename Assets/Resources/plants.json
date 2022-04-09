@@ -1,7 +1,7 @@
 {
     "plants" :[
         {
-            "name": "Donkey's/Burro's Tail",
+            "name": "DonkeysTail",
             "imageName": "DonkeysTail",
             "description": {
                 "environmentInfo": "Native to Honduras and Mexico (temperate regions)",
@@ -19,7 +19,7 @@
             "growthSchedule": ["3", "9", "18", "32"]
         },
         {
-            "name": "Spider Plant",
+            "name": "SpiderPlant",
             "imageName": "SpiderPlant",
             "description": {
                 "environmentInfo": "Native to tropical and subtropical regions of Africa (relatively dry)",
@@ -35,6 +35,24 @@
             "minWater": 6,
             "maxWater": 8,
             "growthSchedule": ["2", "4", "8", "16"]
+        },
+        {
+            "name": "Scallion",
+            "imageName": "Scallion",
+            "description": {
+                "environmentInfo": "Native to Asia but has been found growing in many parts of the world (warm climates)",
+                "soilInfo": "Well-drained soils (e.g. sandy loam, loam, and clay loams); any 1-2-2 ratio fertilizer",
+                "sunlightInfo": "Full sun (at least six hours of direct sunlight on most days)",
+                "wateringInfo": "About 1 inch of water per week (soil should be slightly moist)",
+                "repottingInfo": "Can replant about every month for a continual harvest",
+                "pottingInfo": "Shallow pot that is no more than 6-8 inches deep"
+            },
+            "soil": "Loamy",
+            "sun": "Full",
+            "wateringSchedule": 1,
+            "minWater": 6,
+            "maxWater": 8,
+            "growthSchedule": ["2", "4", "8", "12"]
         }
     ]
 }

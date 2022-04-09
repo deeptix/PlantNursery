@@ -10,11 +10,13 @@ public class Calendar : MonoBehaviour
     public Button nextButton;
     public Button prevButton;
     public Button dayButton;
-    public float spacing;
+    public float buttonSpacing = 50;
     public Text monthText;
+    public int numberOfSkipDays = 2;
 
     System.DateTime currentDate;
     System.DateTime firstDay;
+    float fixedSpacing;
 
     // Start is called before the first frame update
     private void Start()
@@ -26,20 +28,12 @@ public class Calendar : MonoBehaviour
         firstDay = currentDate.AddDays(-(currentDate.Day - 1));
 
         MakeMonthlyCalendar();
-
-        EventSystem.current.firstSelectedGameObject = GameObject.Find(currentDate.ToString()); ;
     }
 
     private void Update()
     {
-        // fix!!
-        // have current date updated on date select and change interactables respectively
-        /*if ()
-        {
-            VoidInteractables();
-            System.DateTime.TryParse(EventSystem.current.currentSelectedGameObject.name, out currentDate);
-            SetInteractables();
-        }*/
+        // Current day stays selected
+        EventSystem.current.SetSelectedGameObject(GameObject.Find(currentDate.ToString()));
     }
 
     void NextMonth()
@@ -78,8 +72,11 @@ public class Calendar : MonoBehaviour
             Button newDayButton = Instantiate(dayButton, parent) as Button;
 
             // adjust row placement
-            newDayButton.gameObject.transform.Translate(0, - (spacing * 
-                ( ( ((int)firstDay.DayOfWeek + i.Day - 1) / 7 ) + 1 ) ), 0);
+            GameObject canvas = GameObject.Find("Canvas");
+            GameObject calendarPanel = GameObject.Find("Calendar");
+            fixedSpacing = buttonSpacing * canvas.GetComponent<Canvas>().scaleFactor * calendarPanel.GetComponent<RectTransform>().localScale.y;
+            newDayButton.gameObject.transform.Translate(0, - (fixedSpacing * 
+                ( ( ((int)firstDay.DayOfWeek + i.Day - 1) / 7 ) + 1) ), 0);
 
             // set button text to day number
             newDayButton.gameObject.transform.GetChild(0).GetComponent<Text>().text = i.Day.ToString();
@@ -94,29 +91,40 @@ public class Calendar : MonoBehaviour
         
     }
 
+    public System.DateTime GetCurrentDate()
+    {
+        return currentDate;
+    }
 
-    void SetInteractables() 
+    public void SetCurrentDate(System.DateTime date) {
+        currentDate = date;
+    }
+
+
+    public void SetInteractables() 
     {
         //set interactable buttons
         GameObject today = GameObject.Find(currentDate.ToString());
         if (today != null) today.GetComponent<Button>().interactable = true;
 
-        GameObject nextDay = GameObject.Find(currentDate.AddDays(1).ToString());
-        if (nextDay != null) nextDay.GetComponent<Button>().interactable = true;
-        GameObject nextToNextDay = GameObject.Find(currentDate.AddDays(2).ToString());
-        if (nextToNextDay != null) nextToNextDay.GetComponent<Button>().interactable = true;
+        for (int i = 1; i <= numberOfSkipDays; i++)
+        {
+            GameObject nextDay = GameObject.Find(currentDate.AddDays(i).ToString());
+            if (nextDay != null) nextDay.GetComponent<Button>().interactable = true;
+        }
     }
 
 
-    void VoidInteractables() 
+    public void VoidInteractables() 
     {
         //set interactable buttons
         GameObject today = GameObject.Find(currentDate.ToString());
         if (today != null) today.GetComponent<Button>().interactable = false;
 
-        GameObject nextDay = GameObject.Find(currentDate.AddDays(1).ToString());
-        if (nextDay != null) nextDay.GetComponent<Button>().interactable = false;
-        GameObject nextToNextDay = GameObject.Find(currentDate.AddDays(2).ToString());
-        if (nextToNextDay != null) nextToNextDay.GetComponent<Button>().interactable = false;
+        for (int i = 1; i <= numberOfSkipDays; i++)
+        {
+            GameObject nextDay = GameObject.Find(currentDate.AddDays(i).ToString());
+            if (nextDay != null) nextDay.GetComponent<Button>().interactable = false;
+        }
     }
 }

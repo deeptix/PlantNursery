@@ -1,0 +1,14 @@
+{
+    "climates" :[
+        {
+            "regionInfo": "Arizona",
+            "temperatureInfo": "90",
+            "humidityInfo": "60%"
+        },
+        {
+            "regionInfo": "Florida",
+            "temperatureInfo": "85",
+            "humidityInfo": "80%"
+        }
+    ]
+}

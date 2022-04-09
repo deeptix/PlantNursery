@@ -5,12 +5,9 @@ using UnityEngine;
 public class Water : MonoBehaviour
 {
     public float rotationAngle = 40;
-    public GameObject sprout;
-    public GameObject soil;
     public ParticleSystem fallingWater;
 
     BoxCollider2D wateringCanCollider;
-    BoxCollider2D seedlingCollider;
     Rigidbody2D rb;
 
     // Start is called before the first frame update
@@ -18,7 +15,6 @@ public class Water : MonoBehaviour
     {
         rb = this.gameObject.GetComponent<Rigidbody2D>();
         wateringCanCollider = this.gameObject.GetComponent<BoxCollider2D>();
-        seedlingCollider = sprout.GetComponent<BoxCollider2D>();
     }
 
     // Update is called once per frame
@@ -28,23 +24,30 @@ public class Water : MonoBehaviour
         mousePosition.z = 0;
         transform.position = mousePosition;
         Quaternion originalRotation = fallingWater.transform.rotation;
+    }
 
-        if (wateringCanCollider.IsTouching(seedlingCollider))
-        {
-            // rotate can clockwise
-            rb.SetRotation(rotationAngle);
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.layer != LayerMask.NameToLayer("Plants")) return;
 
-            fallingWater.gameObject.SetActive(true);
-            Color currentColor = soil.GetComponent<SpriteRenderer>().color;
-            soil.GetComponent<SpriteRenderer>().color = Color.Lerp(currentColor, Color.black, Mathf.PingPong(Time.time, 1));
+        // rotate can clockwise
+        rb.SetRotation(rotationAngle);
 
-        }
-        else {
-            // rotate can to default angle
-            rb.SetRotation(0);
+        fallingWater.gameObject.SetActive(true);
 
-            //fallingWater.transform.rotation = originalRotation;
-            fallingWater.gameObject.SetActive(false);
-        }
+        // TODO: send event that watering is happening
+        // Color currentColor = soil.GetComponent<SpriteRenderer>().color;
+        // soil.GetComponent<SpriteRenderer>().color = Color.Lerp(currentColor, Color.black, Mathf.PingPong(Time.time, 1));
+    }
+
+    void OnTriggerExit2D(Collider2D col)
+    {
+        if (col.gameObject.layer != LayerMask.NameToLayer("Plants")) return;
+
+        // rotate can to default angle
+        rb.SetRotation(0);
+
+        //fallingWater.transform.rotation = originalRotation;
+        fallingWater.gameObject.SetActive(false);
     }
 }

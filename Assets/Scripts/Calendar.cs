@@ -97,6 +97,7 @@ public class Calendar : MonoBehaviour
     }
 
     public void SetCurrentDate(System.DateTime date) {
+        EventBus.Broadcast<int>(EventTypes.DayPassed, date.Subtract(currentDate).Days);
         currentDate = date;
     }
 

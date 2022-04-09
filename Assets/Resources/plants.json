@@ -10,7 +10,10 @@
                 "wateringInfo": "Every three weeks (or once soil has dried up)",
                 "repottingInfo": "Once the plant has completely filled up the pot (should generally avoid repotting unless necessary)",
                 "pottingInfo": "6-8 inch pot"
-            }
+            },
+            "wateringSchedule": 1,
+            "minWater": 6,
+            "maxWater": 8
         },
         {
             "name": "Spider Plant",
@@ -22,7 +25,10 @@
                 "wateringInfo": "About once a week (or once soil has dried up)",
                 "repottingInfo": "Repot when the roots are big enough",
                 "pottingInfo": "Just slightly larger than the plant's root"
-            }
+            },
+            "wateringSchedule": 1,
+            "minWater": 6,
+            "maxWater": 8
         }
     ]
 }

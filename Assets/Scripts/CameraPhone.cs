@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,6 +20,7 @@ public class CameraPhone : MonoBehaviour
     private PhoneManager phoneManager;
     private EncyclopediaManager encyclopediaManager;
     private bool resetComplete = false;
+    private PlantType plantType;
 
     public void OnMouseDown()
     {
@@ -71,7 +73,8 @@ public class CameraPhone : MonoBehaviour
             if (hit.collider != null)
             {
                 SearchText.text = "Found!";
-                PlantNameText.text = "Cactus"; //TODO: Get from the hit plant
+                plantType = hit.transform.gameObject.GetComponent<PlantStateManager>().plantType;
+                PlantNameText.text = Enum.GetName(typeof(PlantType), plantType);
                 SearchButton.interactable = true;
             }
             else
@@ -90,7 +93,7 @@ public class CameraPhone : MonoBehaviour
     public void Search() {
         phoneManager.HidePhoneCamera();
         encyclopediaManager.ShowEncyclopedia();
-        //TODO: Go to encyclopedia page for the current plant
+        encyclopediaManager.GoToPage(plantType);
 
         resetComplete = false;
     }

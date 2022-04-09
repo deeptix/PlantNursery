@@ -27,9 +27,9 @@ public class PlantStateManager : MonoBehaviour
 
     private GameManager gameManager;
     private RectTransform rectTransform; 
+    public Sprite[] plantSprites;
     public TMP_Text stats;
-    public string plantName;        // Plant name
-    public PlantType plantType;        // Plant type
+    public PlantType plantType;     // Plant type
     public Plant requirements;      // Static care requirements for plant
     public int age;                 // Age of plant in days
     private int ageHealthy;         // Age of plant in a healthy state
@@ -41,8 +41,13 @@ public class PlantStateManager : MonoBehaviour
     public Sunlight sun;            // Type of sun plant is in
     // public int temp;             // Temperature of plant environment
 
-    /* TESTING */
-    // public Button oneDayButton; 
+    void Awake() {
+        plantSprites = Resources.LoadAll<Sprite>(plantType.ToString());
+        // Debug.Log("Loaded " + plantSprites.Length + " sprites!");
+        // foreach (Sprite plantSprite in plantSprites) {
+        //     Debug.Log("Loaded " + plantSprite.name);
+        // }
+    }
 
     // Initialize plant
     void Start() {
@@ -77,8 +82,8 @@ public class PlantStateManager : MonoBehaviour
         // Display initial stats
         displayStats();
 
-        /* TESTING */
-        // oneDayButton.onClick.AddListener(delegate {passTime(1);});
+        // Adding listeners
+        EventBus.AddListener(EventTypes.DayPassed, new CallBack<int>(passTime));
     }
 
     // Updates Growth and Health states based on plant care + number of days skipped
@@ -95,6 +100,9 @@ public class PlantStateManager : MonoBehaviour
         // Update growth state based on number of days in a healthy state
         updateGrowthState();
 
+        // Update sprite
+        updateSprite();
+
         // Update displayed stats
         displayStats();
     }
@@ -106,6 +114,7 @@ public class PlantStateManager : MonoBehaviour
     // Note: addWaterAmount can be the time duration in which the user watered the plant for
     public void waterPlant(float addWaterAmount) {
         water = Math.Min(water + addWaterAmount, 10);
+        displayStats();
     }
 
     // Updates sunlight provided when user moves the plant
@@ -194,7 +203,7 @@ public class PlantStateManager : MonoBehaviour
 
     // Formats the plant stats into a string
     private string formatStats() {
-        return "Plant Name: "   + plantName              + "\n"
+        return "Plant Name: "   + plantType.ToString()   + "\n"
              + "Age: "          + age.ToString()         + "\n"
              + "Healthy Age: "  + ageHealthy.ToString()  + "\n"
              + "Health State: " + healthState.ToString() + "\n"
@@ -206,6 +215,45 @@ public class PlantStateManager : MonoBehaviour
 
     private void displayStats() {
         stats.text = formatStats();
+    }
+
+    private string getSpriteName() {
+        string spriteName = plantType.ToString().ToLower() + "_";
+        string lowerHealthState = healthState.ToString().ToLower();
+        switch (growthState) {
+            case Growth.Sprout:
+                spriteName += "sprout";
+                break;
+            case Growth.Primary:
+                spriteName += "growth 1 " + lowerHealthState;
+                break;
+            case Growth.Secondary:
+                spriteName += "growth 2 " + lowerHealthState;
+                break;
+            case Growth.Mature:
+                spriteName += "growth 3 " + lowerHealthState;
+                break;
+            case Growth.Overgrown:
+                spriteName += "overgrown";
+                break;
+        }
+        return spriteName;
+    }
+
+    private Sprite getSprite(string spriteName) {
+        foreach (Sprite plantSprite in plantSprites) {
+            if (plantSprite.name == spriteName) {
+                return plantSprite;
+            }
+        }
+        Debug.Log("Could not find sprite " + spriteName);
+        return null;
+    }
+
+    private void updateSprite() {
+        string spriteName = getSpriteName();
+        string childSpriteName = plantType.ToString() + "Plant";
+        transform.Find(childSpriteName).GetComponent<SpriteRenderer>().sprite = getSprite(spriteName);
     }
 
     /* TESTING WATERING */

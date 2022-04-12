@@ -30,12 +30,6 @@ public class Calendar : MonoBehaviour
         MakeMonthlyCalendar();
     }
 
-    private void Update()
-    {
-        // Current day stays selected
-        EventSystem.current.SetSelectedGameObject(GameObject.Find(currentDate.ToString()));
-    }
-
     void NextMonth()
     {
         firstDay = firstDay.AddMonths(1);
@@ -106,7 +100,13 @@ public class Calendar : MonoBehaviour
     {
         //set interactable buttons
         GameObject today = GameObject.Find(currentDate.ToString());
-        if (today != null) today.GetComponent<Button>().interactable = true;
+        if (today != null) {
+            today.GetComponent<Button>().interactable = true;
+            ColorBlock colorVar = today.GetComponent<Button>().colors;
+            colorVar.normalColor = new Color(126f/255f, 181f/255f, 236f/255f);
+            colorVar.pressedColor = new Color(126f/255f, 181f/255f, 236f/255f);
+            today.GetComponent<Button>().colors = colorVar;
+        }
 
         for (int i = 1; i <= numberOfSkipDays; i++)
         {
@@ -120,7 +120,12 @@ public class Calendar : MonoBehaviour
     {
         //set interactable buttons
         GameObject today = GameObject.Find(currentDate.ToString());
-        if (today != null) today.GetComponent<Button>().interactable = false;
+        if (today != null) {
+            today.GetComponent<Button>().interactable = false;
+            ColorBlock colorVar = today.GetComponent<Button>().colors;
+            colorVar.normalColor = Color.white;
+            today.GetComponent<Button>().colors = colorVar;
+        }
 
         for (int i = 1; i <= numberOfSkipDays; i++)
         {

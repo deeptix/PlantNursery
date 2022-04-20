@@ -55,13 +55,20 @@ public class EncyclopediaManager : MonoBehaviour
 
     private void setCurrentScene() {
         Plant currentPlant = plants[selectionIndex];
+        PlantTasks tasks = currentPlant.tasks;
         plantImage.preserveAspect = true;
         plantImage.sprite = currentPlant.PlantImage;
         plantNameText.text = currentPlant.name;
         environmentText.text = "Typical Environment: " + currentPlant.description.environmentInfo;
         soilText.text = "Soil Info: " + currentPlant.description.soilInfo;
         sunlightText.text = "Sunlight Needs: " + currentPlant.description.sunlightInfo;
-        wateringText.text = "Watering Needs: " + currentPlant.description.wateringInfo;
+
+        if (tasks.wateringTask != null && !tasks.wateringTask.task.IsCompleted()) {
+            wateringText.text = tasks.wateringTask.task.GetTaskName();
+        } else {
+            wateringText.text = "Watering Needs: " + currentPlant.description.wateringInfo;
+        }
+
         repottingText.text = "Repotting Needs: " + currentPlant.description.repottingInfo;
         potsizeText.text = "Typical Pot Size: " + currentPlant.description.pottingInfo;
     }

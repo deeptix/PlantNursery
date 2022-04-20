@@ -64,7 +64,7 @@ public class EncyclopediaManager : MonoBehaviour
         sunlightText.text = "Sunlight Needs: " + currentPlant.description.sunlightInfo;
 
         if (tasks.wateringTask != null && !tasks.wateringTask.task.IsCompleted()) {
-            wateringText.text = tasks.wateringTask.task.GetTaskName();
+            wateringText.text = tasks.wateringTask.task.GetTaskName() + ": " + tasks.wateringTask.task.GetTaskProgressString();
         } else {
             wateringText.text = "Watering Needs: " + currentPlant.description.wateringInfo;
         }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class DropManager : MonoBehaviour
 {
     public GameObject plantHolding;
+    public Sunlight sun;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +21,7 @@ public class DropManager : MonoBehaviour
                 if (gameObject.GetComponent<BoxCollider2D>().IsTouching(plantDropped.GetComponent<BoxCollider2D>())) {
                     // collided! update plant holding accordingly
                     plantHolding = plantDropped;
+                    plantHolding.GetComponent<PlantStateManager>().movePlant(sun);
                 } else {
                     // no collision --> set plant holding to null
                     plantHolding = null;

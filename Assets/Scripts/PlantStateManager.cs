@@ -41,12 +41,11 @@ public class PlantStateManager : MonoBehaviour
     public Sunlight sun;            // Type of sun plant is in
     // public int temp;             // Temperature of plant environment
 
+    public float SUNLIGHT_ADJ = 1f; // Absorption adjustment for incorrect sunlight
+    public float SOIL_ADJ = 1f;     // Absorption adjustment for incorrect soil
+
     void Awake() {
         plantSprites = Resources.LoadAll<Sprite>(plantType.ToString());
-        // Debug.Log("Loaded " + plantSprites.Length + " sprites!");
-        // foreach (Sprite plantSprite in plantSprites) {
-        //     Debug.Log("Loaded " + plantSprite.name);
-        // }
     }
 
     // Initialize plant
@@ -71,14 +70,6 @@ public class PlantStateManager : MonoBehaviour
         // Plant starts off with the middle amount of water
         water = (requirements.minWater + requirements.maxWater) / 2;
 
-        /* Absorption Rate:
-        - calculated as (maxWater - minWater) / numDaysTillNextWater
-        - each day, the plant will lose absorptionRate water
-        - this means that if plants starts off with maxWater, then after wateringSchedule weeks,
-          plant will have minWater left
-        */
-        absorptionRate = (requirements.maxWater - requirements.minWater)/(7*requirements.wateringSchedule);
-
         // Display initial stats
         displayStats();
 
@@ -90,6 +81,9 @@ public class PlantStateManager : MonoBehaviour
     public void passTime(int numDays) {
         // Update overall plant age
         age += numDays;
+
+        // Update absorption rate based on external conditions
+        updateAbsorptionRate();
 
         // Update water amount due to absorption by plant
         absorb(numDays);
@@ -120,14 +114,16 @@ public class PlantStateManager : MonoBehaviour
     // Updates sunlight provided when user moves the plant
     public void movePlant(Sunlight newSun) {
         sun = newSun;
+        displayStats();
     }
 
     // Updates the soil when user changes the soil
     public void changeSoil(SoilTypes newSoil) {
         soil = newSoil;
+        displayStats();
     }
 
-    /* TODO: Add in temperature functionality afterwards 
+    /* Potential feature: temperature functionality 
     // Updates the temperature when user changes the temperature
     public void changeTemperature(int newTemp) {
         temp = newTemp;
@@ -135,6 +131,27 @@ public class PlantStateManager : MonoBehaviour
     */
 
     /* Private Helper functions below */
+
+    /* Absorption Rate:
+    - if external conditions are correct, calculated as (maxWater - minWater) / numDaysTillNextWater
+    - affected by incorrect sunlight/soil
+    - each day, the plant will lose absorptionRate water
+    - this means that if plants starts off with maxWater, then after wateringSchedule weeks,
+        plant will have minWater left
+    */
+    private void updateAbsorptionRate() {
+        float numerator = requirements.maxWater - requirements.minWater;
+
+        // Too much sun --> increase absorption rate 
+        // Too little sun --> decrease absorption rate
+        numerator -= SUNLIGHT_ADJ * (sun - requirements.sun);
+
+        // Soil retains too much water --> decrease absorption rate
+        // Soil does not retain enough water --> increase absorption rate
+        numerator += SOIL_ADJ * (soil - requirements.soil);
+
+        absorptionRate = numerator / (7*requirements.wateringSchedule);
+    }
     
     // Returns true <==> external conditions (soil, sun) match plant requirements
     private bool correctExternalConditions() {
@@ -255,16 +272,4 @@ public class PlantStateManager : MonoBehaviour
         string childSpriteName = plantType.ToString() + "Plant";
         transform.Find(childSpriteName).GetComponent<SpriteRenderer>().sprite = getSprite(spriteName);
     }
-
-    /* TESTING WATERING */
-    
-    // Called every frame while the mouse stays over this object
-    // private void OnMouseOver() {
-    //     if (Input.GetMouseButton(0)) {
-    //         waterPlant(Time.deltaTime);
-    //         displayStats();
-    //     }
-    // }
-
-
 }

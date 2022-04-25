@@ -41,8 +41,8 @@ public class PlantStateManager : MonoBehaviour
     public Sunlight sun;            // Type of sun plant is in
     // public int temp;             // Temperature of plant environment
 
-    public float SUNLIGHT_ADJ = 1f; // Absorption adjustment for incorrect sunlight
-    public float SOIL_ADJ = 1f;     // Absorption adjustment for incorrect soil
+    public float SUNLIGHT_ADJ = 0.1f; // Absorption adjustment for incorrect sunlight
+    public float SOIL_ADJ = 0.1f;     // Absorption adjustment for incorrect soil
 
     void Awake() {
         plantSprites = Resources.LoadAll<Sprite>(plantType.ToString());
@@ -69,6 +69,9 @@ public class PlantStateManager : MonoBehaviour
 
         // Plant starts off with the middle amount of water
         water = (requirements.minWater + requirements.maxWater) / 2;
+
+        // just for debugging purposes --> updating here is unnecessary (only needs to be done in passTime)
+        updateAbsorptionRate();
 
         // Display initial stats
         displayStats();
@@ -114,12 +117,20 @@ public class PlantStateManager : MonoBehaviour
     // Updates sunlight provided when user moves the plant
     public void movePlant(Sunlight newSun) {
         sun = newSun;
+        
+        // just for debugging purposes --> updating here is unnecessary (only needs to be done in passTime)
+        updateAbsorptionRate();
+
         displayStats();
     }
 
     // Updates the soil when user changes the soil
     public void changeSoil(SoilTypes newSoil) {
         soil = newSoil;
+
+        // just for debugging purposes --> updating here is unnecessary (only needs to be done in passTime)
+        updateAbsorptionRate();
+
         displayStats();
     }
 
@@ -144,10 +155,12 @@ public class PlantStateManager : MonoBehaviour
 
         // Too much sun --> increase absorption rate 
         // Too little sun --> decrease absorption rate
-        numerator -= SUNLIGHT_ADJ * (sun - requirements.sun);
+        // (small sunlight value, high retention rate <--> large sunlight value, low retention rate)
+        numerator += SUNLIGHT_ADJ * (sun - requirements.sun);
 
         // Soil retains too much water --> decrease absorption rate
         // Soil does not retain enough water --> increase absorption rate
+        // (small soil value, high retention rate <--> large soil value, low retention rate)
         numerator += SOIL_ADJ * (soil - requirements.soil);
 
         absorptionRate = numerator / (7*requirements.wateringSchedule);
@@ -220,14 +233,15 @@ public class PlantStateManager : MonoBehaviour
 
     // Formats the plant stats into a string
     private string formatStats() {
-        return "Plant Name: "   + plantType.ToString()   + "\n"
-             + "Age: "          + age.ToString()         + "\n"
-             + "Healthy Age: "  + ageHealthy.ToString()  + "\n"
-             + "Health State: " + healthState.ToString() + "\n"
-             + "Growth State: " + growthState.ToString() + "\n"
-             + "Water: "        + water.ToString()       + "\n"
-             + "Soil: "         + soil.ToString()        + "\n"
-             + "Sun: "          + sun.ToString()         + "\n";
+        return "Plant Name: "          + plantType.ToString()       + "\n"
+             + "Age: "                 + age.ToString()             + "\n"
+             + "Healthy Age: "         + ageHealthy.ToString()      + "\n"
+             + "Health State: "        + healthState.ToString()     + "\n"
+             + "Growth State: "        + growthState.ToString()     + "\n"
+             + "Water: "               + water.ToString()           + "\n"
+             + "Absorption Rate: "     + absorptionRate.ToString()  + "\n"
+             + "Soil: "                + soil.ToString()            + "\n"
+             + "Sun: "                 + sun.ToString()             + "\n";
     }
 
     private void displayStats() {

@@ -18593,6 +18593,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5261046092384643735, guid: 2dff3911599004039a804eb034a455f7, type: 3}
+      propertyPath: SOIL_ADJ
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5261046092384643735, guid: 2dff3911599004039a804eb034a455f7, type: 3}
+      propertyPath: SUNLIGHT_ADJ
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 5261046092384643736, guid: 2dff3911599004039a804eb034a455f7, type: 3}
       propertyPath: m_Size.y
       value: 1.3362134
@@ -32695,6 +32703,14 @@ PrefabInstance:
     - target: {fileID: 5261046092384643734, guid: 2dff3911599004039a804eb034a455f7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5261046092384643735, guid: 2dff3911599004039a804eb034a455f7, type: 3}
+      propertyPath: SOIL_ADJ
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5261046092384643735, guid: 2dff3911599004039a804eb034a455f7, type: 3}
+      propertyPath: SUNLIGHT_ADJ
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 5261046092384643736, guid: 2dff3911599004039a804eb034a455f7, type: 3}
       propertyPath: m_Size.y

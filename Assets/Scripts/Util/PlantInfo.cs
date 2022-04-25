@@ -14,13 +14,12 @@ public enum PlantType {
 }
 
 // Various soil types plants require
-// Ordered by ability to retain water, lowest to highest
+// Ordered by ability to retain water, highest to lowest
 public enum SoilTypes {
-    Sandy = 0,
-    Silty = 1,
-    Loamy = 2,
-    Clay = 3,
-    None
+    Clay = 0,
+    Loamy = 1,
+    Silty = 2,
+    Sandy = 3,
 }
 
 // Various amounts of sunlight plants require

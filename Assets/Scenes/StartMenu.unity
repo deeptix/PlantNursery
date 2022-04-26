@@ -1770,7 +1770,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 326b85dc74e58414ebae1886d8435890, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  creditsPanel: {fileID: 0}
+  creditsPanel: {fileID: 1616891294}
 --- !u!4 &2010969000
 Transform:
   m_ObjectHideFlags: 0

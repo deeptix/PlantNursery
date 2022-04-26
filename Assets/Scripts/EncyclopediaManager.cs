@@ -137,7 +137,7 @@ public class EncyclopediaManager : MonoBehaviour
         maxPlantGrowth.TryGetValue(currentPlant.plantType, out plantGrowth);
 
         int i = 0;
-        for (; i <= (int)plantGrowth; i++) {
+        for (; i <= Mathf.Min((int)plantGrowth, plantStates.Length - 1); i++) {
             Sprite plantSprite = currentPlant.GetSprite((Growth)i, Health.Healthy);
             if (plantSprite != null) {
                 plantStates[i].SetActive(true);

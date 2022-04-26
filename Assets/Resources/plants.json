@@ -94,7 +94,7 @@
             "wateringSchedule": 1,
             "minWater": 6,
             "maxWater": 8,
-            "growthSchedule": ["2", "4", "8", "12"]
+            "growthSchedule": ["2", "4", "8"]
         },
         {
             "name": "Peace Lily",
@@ -126,7 +126,7 @@
             "wateringSchedule": 1,
             "minWater": 6,
             "maxWater": 8,
-            "growthSchedule": ["2", "4", "8", "12"]
+            "growthSchedule": ["2", "4", "8"]
         }
     ]
 }

@@ -15,4 +15,5 @@ public enum EventTypes
     WateredPlant,
     AgedPlant,
     DraggingPlant,
+    UpdatedPlant,       // Broadcasted when a plant's information is updated
 }

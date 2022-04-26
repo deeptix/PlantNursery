@@ -11,6 +11,8 @@ public class Water : MonoBehaviour
     BoxCollider2D wateringCanCollider;
     Rigidbody2D rb;
 
+    PlantStateManager lastPlant;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,6 +37,12 @@ public class Water : MonoBehaviour
         {
             PlantStateManager plant = hit.transform.gameObject.GetComponent<PlantStateManager>();
             plant.waterPlant(Time.deltaTime / WATERING_RATE);
+            if (plant != lastPlant) EventBus.Broadcast<PlantStateManager>(EventTypes.WateredPlant, plant);
+            lastPlant = plant;
+        } 
+        else 
+        {
+            lastPlant = null;
         }
     }
 

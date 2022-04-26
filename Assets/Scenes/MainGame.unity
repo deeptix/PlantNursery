@@ -2655,7 +2655,7 @@ MonoBehaviour:
   nextButton: {fileID: 106298912}
   prevButton: {fileID: 1725743835}
   dayButton: {fileID: 6662831719724292959, guid: 3fef3813afc319d4d9555130cae2344b, type: 3}
-  buttonSpacing: 50
+  buttonSpacing: 100
   monthText: {fileID: 1553305198}
   numberOfSkipDays: 3
 --- !u!1 &387621545
@@ -12558,7 +12558,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -210, y: -21.1}
+  m_AnchoredPosition: {x: -210, y: -21.099976}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1225535088

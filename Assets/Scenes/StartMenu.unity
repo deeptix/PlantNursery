@@ -821,7 +821,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.63130206, g: 0.8773585, b: 0.55869526, a: 0.7882353}
+  m_Color: {r: 0.5550998, g: 0.754717, b: 0.49483803, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1767,10 +1767,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2010968998}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb484c414081431c9876cebbf093318, type: 3}
+  m_Script: {fileID: 11500000, guid: 326b85dc74e58414ebae1886d8435890, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  creditsPanel: {fileID: 1616891294}
+  creditsPanel: {fileID: 0}
 --- !u!4 &2010969000
 Transform:
   m_ObjectHideFlags: 0

@@ -27,6 +27,7 @@ public class PlantStateManager : MonoBehaviour
 
     private GameManager gameManager;
     private RectTransform rectTransform; 
+    private DrainageManager drainManager;
     public Sprite[] plantSprites;
     public TMP_Text stats;
     public PlantType plantType;     // Plant type
@@ -40,6 +41,7 @@ public class PlantStateManager : MonoBehaviour
     public SoilTypes soil;          // Type of soil plant is in
     public Sunlight sun;            // Type of sun plant is in
     // public int temp;             // Temperature of plant environment
+    private float idealWater;         // minWater + maxWater / 2
 
     public float SUNLIGHT_ADJ = 0.1f; // Absorption adjustment for incorrect sunlight
     public float SOIL_ADJ = 0.1f;     // Absorption adjustment for incorrect soil
@@ -52,6 +54,7 @@ public class PlantStateManager : MonoBehaviour
     void Start() {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         rectTransform = GetComponent<RectTransform>();
+        drainManager = transform.Find("Pot").GetComponent<DrainageManager>();
 
         // Store plant care requirements 
         if (!gameManager.GetPlant(plantType, out requirements)) {
@@ -68,7 +71,8 @@ public class PlantStateManager : MonoBehaviour
         sun = requirements.sun;
 
         // Plant starts off with the middle amount of water
-        water = (requirements.minWater + requirements.maxWater) / 2;
+        idealWater = (requirements.minWater + requirements.maxWater) / 2;
+        water = idealWater;
 
         // just for debugging purposes --> updating here is unnecessary (only needs to be done in passTime)
         updateAbsorptionRate();
@@ -111,6 +115,9 @@ public class PlantStateManager : MonoBehaviour
     // Note: addWaterAmount can be the time duration in which the user watered the plant for
     public void waterPlant(float addWaterAmount) {
         water = Math.Min(water + addWaterAmount, 10);
+        if (water >= idealWater) {
+            drainManager.turnDrainageOn();
+        }
         displayStats();
     }
 

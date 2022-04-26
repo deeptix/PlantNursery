@@ -16,6 +16,10 @@ public class GameManager : MonoBehaviour
         plantDict = new Dictionary<PlantType, Plant>();
         foreach (Plant plant in plants) {
             plantDict.Add(plant.plantType, plant);
+
+            if (plant.tasks.wateringTask != null)
+                plant.tasks.wateringTask.SetPlantType(plant.plantType);
+            // TODO: Add in for each other task we add
         }
     }
 

@@ -42,11 +42,18 @@ public class PlantDescription
 }
 
 [System.Serializable]
+public class PlantTasks
+{
+    public TaskDescription wateringTask;
+}
+
+[System.Serializable]
 public class Plant
 {
     public string name;                     // Name of the plant
     public string imageName;                // Name of the image for the plant
     public PlantDescription description;    // All the English description for the plant
+    public PlantTasks tasks;                // All the Tasks associated for the plant
 
     public PlantType plantType {
         get {

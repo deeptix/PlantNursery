@@ -11,6 +11,12 @@
                 "repottingInfo": "Once the plant has completely filled up the pot (should generally avoid repotting unless necessary)",
                 "pottingInfo": "6-8 inch pot"
             },
+            "tasks": {
+                "wateringTask": {
+                    "taskTypeName": "WateringQuota",
+                    "goalValue": 5
+                }
+            },
             "soil": "Sandy",
             "sun": "Partial",
             "wateringSchedule": 1,
@@ -29,6 +35,12 @@
                 "repottingInfo": "Repot when the roots are big enough",
                 "pottingInfo": "Just slightly larger than the plant's root"
             },
+            "tasks": {
+                "wateringTask": {
+                    "taskTypeName": "WateringQuota",
+                    "goalValue": 10
+                }
+            },
             "soil": "Loamy",
             "sun": "Partial",
             "wateringSchedule": 1,
@@ -46,6 +58,12 @@
                 "wateringInfo": "About 1 inch of water per week (soil should be slightly moist)",
                 "repottingInfo": "Can replant about every month for a continual harvest",
                 "pottingInfo": "Shallow pot that is no more than 6-8 inches deep"
+            },
+            "tasks": {
+                "wateringTask": {
+                    "taskTypeName": "WateringQuota",
+                    "goalValue": 20
+                }
             },
             "soil": "Loamy",
             "sun": "Full",

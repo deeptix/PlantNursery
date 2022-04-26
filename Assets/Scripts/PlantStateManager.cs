@@ -27,6 +27,7 @@ public class PlantStateManager : MonoBehaviour
 
     private GameManager gameManager;
     private RectTransform rectTransform; 
+    private DrainageManager drainManager;
     public Sprite[] plantSprites;
     public TMP_Text stats;
     public PlantType plantType;     // Plant type
@@ -40,6 +41,7 @@ public class PlantStateManager : MonoBehaviour
     public SoilTypes soil;          // Type of soil plant is in
     public Sunlight sun;            // Type of sun plant is in
     // public int temp;             // Temperature of plant environment
+    private float idealWater;         // minWater + maxWater / 2
 
     void Awake() {
         plantSprites = Resources.LoadAll<Sprite>(plantType.ToString());
@@ -53,6 +55,7 @@ public class PlantStateManager : MonoBehaviour
     void Start() {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         rectTransform = GetComponent<RectTransform>();
+        drainManager = transform.Find("Pot").GetComponent<DrainageManager>();
 
         // Store plant care requirements 
         if (!gameManager.GetPlant(plantType, out requirements)) {
@@ -69,7 +72,8 @@ public class PlantStateManager : MonoBehaviour
         sun = requirements.sun;
 
         // Plant starts off with the middle amount of water
-        water = (requirements.minWater + requirements.maxWater) / 2;
+        idealWater = (requirements.minWater + requirements.maxWater) / 2;
+        water = idealWater;
 
         /* Absorption Rate:
         - calculated as (maxWater - minWater) / numDaysTillNextWater
@@ -114,6 +118,9 @@ public class PlantStateManager : MonoBehaviour
     // Note: addWaterAmount can be the time duration in which the user watered the plant for
     public void waterPlant(float addWaterAmount) {
         water = Math.Min(water + addWaterAmount, 10);
+        if (water >= idealWater) {
+            drainManager.turnDrainageOn();
+        }
         displayStats();
     }
 

@@ -33,7 +33,7 @@ public class PlantStateManager : MonoBehaviour
     public PlantType plantType;     // Plant type
     public Plant requirements;      // Static care requirements for plant
     public int age;                 // Age of plant in days
-    private int ageHealthy;         // Age of plant in a healthy state
+    public int ageHealthy;         // Age of plant in a healthy state
     public Health healthState;      // Dynamic health state of plant
     public Growth growthState;      // Dynamic growth state of plant
     public float water;             // Amount of water plant has
@@ -106,6 +106,8 @@ public class PlantStateManager : MonoBehaviour
 
         // Update displayed stats
         displayStats();
+
+        EventBus.Broadcast<PlantStateManager>(EventTypes.UpdatedPlant, this);
     }
 
     /* Functions to update plant states based on user actions */
@@ -225,7 +227,7 @@ public class PlantStateManager : MonoBehaviour
                 }
                 break;
             case Growth.Mature:
-                if (ageHealthy >= requirements.growthSchedule[3]) {
+                if (requirements.growthSchedule.Length >= 4 && ageHealthy >= requirements.growthSchedule[3]) {
                     newGrowthState = Growth.Overgrown;
                     ageHealthy = 0;
                 }

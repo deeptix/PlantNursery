@@ -1,13 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public abstract class GameManager : MonoBehaviour
 {
+    public GameObject winConditions;
+    public GameObject winScreen;
+
     private string plantsFilePath = "plants";
     private Plant[] plants;
 
     private Dictionary<PlantType, Plant> plantDict;
+
+    protected PlantStateManager[] plantManagers;
 
     void Awake() {
         TextAsset plantFile = Resources.Load<TextAsset>(plantsFilePath);
@@ -26,7 +32,27 @@ public class GameManager : MonoBehaviour
             if (plant.tasks.soilTask != null)
                 plant.tasks.soilTask.SetPlantType(plant.plantType);
         }
+
+        plantManagers = GameObject.FindObjectsOfType<PlantStateManager>();
+        EventBus.AddListener<PlantStateManager>(EventTypes.UpdatedPlant, CheckWinCondition);
+
+        winConditions.SetActive(true);
+        winScreen.SetActive(false);
     }
+
+    public void HideWinConditions() {
+        winConditions.SetActive(false);
+    }
+
+    private void CheckWinCondition(PlantStateManager plant) {
+        UpdateStats(plant);
+        if (HasWon()) {
+            winScreen.SetActive(true);
+        }
+    }
+
+    public abstract void UpdateStats(PlantStateManager plant);
+    public abstract bool HasWon();
 
     // Grabs the plant information from the dictionary given plant name
     // Returns true if successful and stores the result in plant; false otherwise
@@ -36,5 +62,9 @@ public class GameManager : MonoBehaviour
 
     public Plant[] GetAllPlants() {
         return plants;
+    }
+
+    public void BackToLevelSelect() {
+        SceneManager.LoadScene("LevelSelect");
     }
 }

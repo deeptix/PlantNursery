@@ -13,7 +13,7 @@ public class StartManager : MonoBehaviour
     }
 
     public void StartGame() {
-        SceneManager.LoadScene("MainGame");
+        SceneManager.LoadScene("LevelSelect");
     }
 
     public void ShowCredits() {

@@ -65,8 +65,22 @@ public class Plant
     }
 
     // Insert any other numbers required for the plant
-    public SoilTypes soil;                  // Soil required for plant
-    public Sunlight sun;                    // Sunlight required for plant
+    public string soil;                  // Soil required for plant
+
+    public SoilTypes Soil {
+        get {
+            return (SoilTypes)Enum.Parse(typeof(SoilTypes), soil);
+        }
+    }
+
+    public string sun;                    // Sunlight required for plant
+
+    public Sunlight Sun {
+        get {
+            return (Sunlight)Enum.Parse(typeof(Sunlight), sun);
+        }
+    }
+
     // public int minTemp;                  // Minimum acceptable temperature for plant
     // public int maxTemp;                  // Maximum acceptable temperature for plant
     public int wateringSchedule;            // Water every wateringSchedule weeks

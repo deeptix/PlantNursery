@@ -67,8 +67,8 @@ public class PlantStateManager : MonoBehaviour
 
         // TODO: correctly initialize soil + sun based on given pot/positioning?
         // Currently initializes soil + sun to the plant care requirements
-        soil = requirements.soil;
-        sun = requirements.sun;
+        soil = requirements.Soil;
+        sun = requirements.Sun;
 
         // Plant starts off with the middle amount of water
         idealWater = (requirements.minWater + requirements.maxWater) / 2;
@@ -163,19 +163,19 @@ public class PlantStateManager : MonoBehaviour
         // Too much sun --> increase absorption rate 
         // Too little sun --> decrease absorption rate
         // (small sunlight value, high retention rate <--> large sunlight value, low retention rate)
-        numerator += SUNLIGHT_ADJ * (sun - requirements.sun);
+        numerator += SUNLIGHT_ADJ * (sun - requirements.Sun);
 
         // Soil retains too much water --> decrease absorption rate
         // Soil does not retain enough water --> increase absorption rate
         // (small soil value, high retention rate <--> large soil value, low retention rate)
-        numerator += SOIL_ADJ * (soil - requirements.soil);
+        numerator += SOIL_ADJ * (soil - requirements.Soil);
 
         absorptionRate = numerator / (7*requirements.wateringSchedule);
     }
     
     // Returns true <==> external conditions (soil, sun) match plant requirements
     private bool correctExternalConditions() {
-        return (soil == requirements.soil && sun == requirements.sun);
+        return (soil == requirements.Soil && sun == requirements.Sun);
     }
 
     // Update health state based on water amount

@@ -12,9 +12,17 @@
                 "pottingInfo": "6-8 inch pot"
             },
             "tasks": {
+                "soilTask": {
+                    "taskTypeName": "SoilQuota",
+                    "goalValue": 20
+                },
                 "wateringTask": {
                     "taskTypeName": "WateringQuota",
                     "goalValue": 5
+                },
+                "sunlightTask": {
+                    "taskTypeName": "SunlightQuota",
+                    "goalValue": 10
                 }
             },
             "soil": "Sandy",
@@ -36,9 +44,17 @@
                 "pottingInfo": "Just slightly larger than the plant's root"
             },
             "tasks": {
+                "soilTask": {
+                    "taskTypeName": "SoilQuota",
+                    "goalValue": 20
+                },
                 "wateringTask": {
                     "taskTypeName": "WateringQuota",
                     "goalValue": 10
+                },
+                "sunlightTask": {
+                    "taskTypeName": "SunlightQuota",
+                    "goalValue": 5
                 }
             },
             "soil": "Loamy",
@@ -60,13 +76,21 @@
                 "pottingInfo": "Shallow pot that is no more than 6-8 inches deep"
             },
             "tasks": {
+                "soilTask": {
+                    "taskTypeName": "SoilQuota",
+                    "goalValue": 4
+                },
                 "wateringTask": {
                     "taskTypeName": "WateringQuota",
-                    "goalValue": 20
+                    "goalValue": 10
+                },
+                "sunlightTask": {
+                    "taskTypeName": "SunlightQuota",
+                    "goalValue": 12
                 }
             },
             "soil": "Loamy",
-            "sun": "Full",
+            "sun": "Sun",
             "wateringSchedule": 1,
             "minWater": 6,
             "maxWater": 8,
@@ -84,9 +108,17 @@
                 "pottingInfo": "Just slightly larger than the plant's root"
             },
             "tasks": {
+                "soilTask": {
+                    "taskTypeName": "SoilQuota",
+                    "goalValue": 4
+                },
                 "wateringTask": {
                     "taskTypeName": "WateringQuota",
-                    "goalValue": 20
+                    "goalValue": 7
+                },
+                "sunlightTask": {
+                    "taskTypeName": "SunlightQuota",
+                    "goalValue": 5
                 }
             },
             "soil": "Loamy",

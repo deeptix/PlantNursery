@@ -108,15 +108,15 @@ public class EncyclopediaManager : MonoBehaviour
         setTaskUI(tasks.sunlightTask, 2);
 
         foreach (Image soilIcon in soilIcons) {
-            soilIcon.color = new Color(0.3f, 0.3f, 0.3f, 0.4f);
+            soilIcon.color = new Color(0.3f, 0.3f, 0.3f, 0.3f);
         }
 
         if (tasks.soilTask.task != null && tasks.soilTask.task.IsCompleted()) {
-            soilIcons[(int)currentPlant.soil].color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+            soilIcons[(int)currentPlant.Soil].color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
         }
 
         foreach (Image waterIcon in waterIcons) {
-            waterIcon.color = new Color(0.3f, 0.3f, 0.3f, 0.4f);
+            waterIcon.color = new Color(0.3f, 0.3f, 0.3f, 0.3f);
         }
 
         if (tasks.wateringTask.task != null && tasks.wateringTask.task.IsCompleted()) {
@@ -126,11 +126,11 @@ public class EncyclopediaManager : MonoBehaviour
         }
 
         foreach (Image sunlightIcon in sunlightIcons) {
-            sunlightIcon.color = new Color(0.5f, 0.25f, 0.25f, 0.4f);
+            sunlightIcon.color = new Color(0.5f, 0.25f, 0.25f, 0.3f);
         }
 
         if (tasks.sunlightTask.task != null && tasks.sunlightTask.task.IsCompleted()) {
-            sunlightIcons[(int)currentPlant.sun].color = new Color(1.0f, 0.5f, 0.5f, 1.0f);
+            sunlightIcons[(int)currentPlant.Sun].color = new Color(1.0f, 0.5f, 0.5f, 1.0f);
         }
 
         Growth plantGrowth;

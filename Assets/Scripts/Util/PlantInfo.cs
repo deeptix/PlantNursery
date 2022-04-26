@@ -15,21 +15,20 @@ public enum PlantType {
 }
 
 // Various soil types plants require
+// Ordered by ability to retain water, highest to lowest
 public enum SoilTypes {
-    Loamy,
-    Sandy,
-    Peaty,
-    Clay,
-    Chalky, 
-    Silty,
-    None
+    Clay = 0,
+    Loamy = 1,
+    Silty = 2,
+    Sandy = 3,
 }
 
 // Various amounts of sunlight plants require
+// Ordered from least to most sunlight
 public enum Sunlight {
-    Sun,        // Full sunlight
-    Partial,    // Partial shade/sunlight
-    Shade       // Full shade
+    Shade = 0,      // Full shade
+    Partial = 1,    // Partial shade/sunlight
+    Sun = 2,        // Full sunlight
 }
 
 [System.Serializable]

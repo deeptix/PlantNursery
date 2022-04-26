@@ -9,12 +9,19 @@ public class EncyclopediaManager : MonoBehaviour
 {
     public GameObject encyclopediaPanel;
 
-    public Image plantImage;
     public TMP_Text plantNameText;
-    public TMP_Text environmentText;
-    public TMP_Text soilText;
-    public TMP_Text sunlightText;
-    public TMP_Text wateringText;
+    public Image plantImage;
+
+    public TMP_Text[] taskTexts;
+    public Image[] taskCheckboxes;
+    public Sprite completedCheckbox;
+    public Sprite incompleteCheckbox;
+
+    public Image[] soilIcons;
+    public Image[] waterIcons;
+    public Image[] sunlightIcons;
+
+    public GameObject[] plantStates;
 
     private Plant[] plants;
     private int selectionIndex;
@@ -23,6 +30,7 @@ public class EncyclopediaManager : MonoBehaviour
     private GameManager gameManager;
 
     private Dictionary<PlantType, int> plantIndices;
+    private Dictionary<PlantType, Growth> maxPlantGrowth;
 
     void Start() {
         // Loading track info from a JSON file
@@ -31,15 +39,30 @@ public class EncyclopediaManager : MonoBehaviour
         plants = gameManager.GetAllPlants();
 
         plantIndices = new Dictionary<PlantType, int>();
+        maxPlantGrowth = new Dictionary<PlantType, Growth>();
+
         int i = 0;
         foreach (Plant plant in plants) {
             plantIndices.Add(plant.plantType, i);
+            maxPlantGrowth.Add(plant.plantType, Growth.Sprout);
             i++;
         }
 
         selectionIndex = 0;
         showingEncyclopedia = false;
         HideEncyclopedia();
+
+        EventBus.AddListener<PlantStateManager>(EventTypes.AgedPlant, UpdateMaxGrowth);
+    }
+
+    public void UpdateMaxGrowth(PlantStateManager plant)
+    {
+        Growth plantGrowth;
+        if (maxPlantGrowth.TryGetValue(plant.plantType, out plantGrowth)) {
+            if ((int)plant.growthState > (int)plantGrowth) {
+                maxPlantGrowth[plant.plantType] = plant.growthState;
+            }
+        }
     }
 
     public void ShowEncyclopedia() {
@@ -51,20 +74,80 @@ public class EncyclopediaManager : MonoBehaviour
         encyclopediaPanel.SetActive(false);
     }
 
+    private void setTaskUI(TaskDescription taskDescription, int index) {
+        if (taskDescription == null || taskDescription.task == null) {
+            taskCheckboxes[index].enabled = false;
+            taskTexts[index].enabled = false;
+            return;
+        }
+
+        taskCheckboxes[index].enabled = true;
+        taskTexts[index].enabled = true;
+
+        if (taskDescription.task.IsCompleted()) {
+            taskCheckboxes[index].sprite = completedCheckbox;
+            taskTexts[index].color = new Color(0.4f, 0.4f, 0.4f, 1.0f);
+            taskTexts[index].text = "<s>" + taskDescription.task.GetTaskName() + ": " + taskDescription.task.GetTaskProgressString() + "</s>";
+        } else {
+            taskCheckboxes[index].sprite = incompleteCheckbox;
+            taskTexts[index].color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
+            taskTexts[index].text = taskDescription.task.GetTaskName() + ": " + taskDescription.task.GetTaskProgressString();
+        }
+    }
+
     private void setCurrentScene() {
         Plant currentPlant = plants[selectionIndex];
         PlantTasks tasks = currentPlant.tasks;
+
+        plantNameText.text = currentPlant.name;
         plantImage.preserveAspect = true;
         plantImage.sprite = currentPlant.PlantImage;
-        plantNameText.text = currentPlant.name;
-        environmentText.text = "Typical Environment: " + currentPlant.description.environmentInfo;
-        soilText.text = "Soil Info: " + currentPlant.description.soilInfo;
-        sunlightText.text = "Sunlight Needs: " + currentPlant.description.sunlightInfo;
 
-        if (tasks.wateringTask != null && !tasks.wateringTask.task.IsCompleted()) {
-            wateringText.text = tasks.wateringTask.task.GetTaskName() + ": " + tasks.wateringTask.task.GetTaskProgressString();
-        } else {
-            wateringText.text = "Watering Needs: " + currentPlant.description.wateringInfo;
+        setTaskUI(tasks.soilTask, 0);
+        setTaskUI(tasks.wateringTask, 1);
+        setTaskUI(tasks.sunlightTask, 2);
+
+        foreach (Image soilIcon in soilIcons) {
+            soilIcon.color = new Color(0.3f, 0.3f, 0.3f, 0.4f);
+        }
+
+        if (tasks.soilTask.task != null && tasks.soilTask.task.IsCompleted()) {
+            soilIcons[(int)currentPlant.soil].color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+        }
+
+        foreach (Image waterIcon in waterIcons) {
+            waterIcon.color = new Color(0.3f, 0.3f, 0.3f, 0.4f);
+        }
+
+        if (tasks.wateringTask.task != null && tasks.wateringTask.task.IsCompleted()) {
+            int avgWater = (int)Mathf.Round(currentPlant.maxWater + currentPlant.minWater) / 2;
+            int index = Mathf.Clamp(avgWater % 3, 0, waterIcons.Length - 1);
+            waterIcons[index].color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+        }
+
+        foreach (Image sunlightIcon in sunlightIcons) {
+            sunlightIcon.color = new Color(0.5f, 0.25f, 0.25f, 0.4f);
+        }
+
+        if (tasks.sunlightTask.task != null && tasks.sunlightTask.task.IsCompleted()) {
+            sunlightIcons[(int)currentPlant.sun].color = new Color(1.0f, 0.5f, 0.5f, 1.0f);
+        }
+
+        Growth plantGrowth;
+        maxPlantGrowth.TryGetValue(currentPlant.plantType, out plantGrowth);
+
+        int i = 0;
+        for (; i <= (int)plantGrowth; i++) {
+            Sprite plantSprite = currentPlant.GetSprite((Growth)i, Health.Healthy);
+            if (plantSprite != null) {
+                plantStates[i].SetActive(true);
+                plantStates[i].GetComponent<Image>().sprite = plantSprite;
+            } else {
+                plantStates[i].SetActive(false);
+            }
+        }
+        for (; i < plantStates.Length; i++) {
+            plantStates[i].SetActive(false);
         }
     }
 

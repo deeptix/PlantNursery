@@ -203,33 +203,40 @@ public class PlantStateManager : MonoBehaviour
     // Update growth state based on number of days in a healthy state according to growth schedule
     // If plant grows, reset healthy age to 0 for next stage
     private void updateGrowthState() {
+        Growth newGrowthState = growthState;
+
         switch (growthState) {
             case Growth.Sprout:
                 if (ageHealthy >= requirements.growthSchedule[0]) {
-                    growthState = Growth.Primary;
+                    newGrowthState = Growth.Primary;
                     ageHealthy = 0;
                 }
                 break;
             case Growth.Primary:
                 if (ageHealthy >= requirements.growthSchedule[1]) {
-                    growthState = Growth.Secondary;
+                    newGrowthState = Growth.Secondary;
                     ageHealthy = 0;
                 }
                 break;
             case Growth.Secondary:
                 if (ageHealthy >= requirements.growthSchedule[2]) {
-                    growthState = Growth.Mature;
+                    newGrowthState = Growth.Mature;
                     ageHealthy = 0;
                 }
                 break;
             case Growth.Mature:
                 if (ageHealthy >= requirements.growthSchedule[3]) {
-                    growthState = Growth.Overgrown;
+                    newGrowthState = Growth.Overgrown;
                     ageHealthy = 0;
                 }
                 break;
             default:
                 break;
+        }
+
+        if (newGrowthState != growthState) {
+            growthState = newGrowthState;
+            EventBus.Broadcast<PlantStateManager>(EventTypes.AgedPlant, this);
         }
     }
 

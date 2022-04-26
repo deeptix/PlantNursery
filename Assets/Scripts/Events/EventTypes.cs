@@ -14,4 +14,5 @@ public enum EventTypes
     DayPassed,
     WateredPlant,
     AgedPlant,
+    DraggingPlant,
 }

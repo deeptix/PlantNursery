@@ -10,7 +10,8 @@ using UnityEngine;
 public enum PlantType {
     DonkeysTail,
     SpiderPlant,
-    Scallion
+    Scallion,
+    PeaceLily
 }
 
 // Various soil types plants require
@@ -44,7 +45,9 @@ public class PlantDescription
 [System.Serializable]
 public class PlantTasks
 {
+    public TaskDescription soilTask;
     public TaskDescription wateringTask;
+    public TaskDescription sunlightTask;
 }
 
 [System.Serializable]
@@ -57,13 +60,27 @@ public class Plant
 
     public PlantType plantType {
         get {
-            return (PlantType)Enum.Parse(typeof(PlantType), name);
+            return (PlantType)Enum.Parse(typeof(PlantType), imageName);
         }
     }
 
     // Insert any other numbers required for the plant
-    public SoilTypes soil;                  // Soil required for plant
-    public Sunlight sun;                    // Sunlight required for plant
+    public string soil;                  // Soil required for plant
+
+    public SoilTypes Soil {
+        get {
+            return (SoilTypes)Enum.Parse(typeof(SoilTypes), soil);
+        }
+    }
+
+    public string sun;                    // Sunlight required for plant
+
+    public Sunlight Sun {
+        get {
+            return (Sunlight)Enum.Parse(typeof(Sunlight), sun);
+        }
+    }
+
     // public int minTemp;                  // Minimum acceptable temperature for plant
     // public int maxTemp;                  // Maximum acceptable temperature for plant
     public int wateringSchedule;            // Water every wateringSchedule weeks
@@ -87,6 +104,49 @@ public class Plant
                 plantImageSprite = Resources.Load<Sprite>(imageFilePath());
             return plantImageSprite;
         }
+    }
+
+    private Sprite[] plantSprites;
+
+    public Sprite[] PlantSprites {
+        get {
+            if (plantSprites == null)
+                plantSprites = Resources.LoadAll<Sprite>(plantType.ToString());
+            return plantSprites;
+        }
+    }
+
+    private string getSpriteName(Growth growthState, Health healthState) {
+        string spriteName = plantType.ToString().ToLower() + "_";
+        string lowerHealthState = healthState.ToString().ToLower();
+        switch (growthState) {
+            case Growth.Sprout:
+                spriteName += "sprout";
+                break;
+            case Growth.Primary:
+                spriteName += "growth 1 " + lowerHealthState;
+                break;
+            case Growth.Secondary:
+                spriteName += "growth 2 " + lowerHealthState;
+                break;
+            case Growth.Mature:
+                spriteName += "growth 3 " + lowerHealthState;
+                break;
+            case Growth.Overgrown:
+                spriteName += "overgrown";
+                break;
+        }
+        return spriteName;
+    }
+
+    public Sprite GetSprite(Growth growthState, Health healthState) {
+        string spriteName = getSpriteName(growthState, healthState);
+        foreach (Sprite plantSprite in PlantSprites) {
+            if (plantSprite.name == spriteName) {
+                return plantSprite;
+            }
+        }
+        return null;
     }
 }
 

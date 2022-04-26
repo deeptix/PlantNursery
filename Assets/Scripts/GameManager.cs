@@ -19,7 +19,12 @@ public class GameManager : MonoBehaviour
 
             if (plant.tasks.wateringTask != null)
                 plant.tasks.wateringTask.SetPlantType(plant.plantType);
-            // TODO: Add in for each other task we add
+
+            if (plant.tasks.sunlightTask != null)
+                plant.tasks.sunlightTask.SetPlantType(plant.plantType);
+            
+            if (plant.tasks.soilTask != null)
+                plant.tasks.soilTask.SetPlantType(plant.plantType);
         }
     }
 

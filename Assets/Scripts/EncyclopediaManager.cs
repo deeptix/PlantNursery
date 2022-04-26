@@ -15,8 +15,6 @@ public class EncyclopediaManager : MonoBehaviour
     public TMP_Text soilText;
     public TMP_Text sunlightText;
     public TMP_Text wateringText;
-    public TMP_Text repottingText;
-    public TMP_Text potsizeText;
 
     private Plant[] plants;
     private int selectionIndex;
@@ -68,9 +66,6 @@ public class EncyclopediaManager : MonoBehaviour
         } else {
             wateringText.text = "Watering Needs: " + currentPlant.description.wateringInfo;
         }
-
-        repottingText.text = "Repotting Needs: " + currentPlant.description.repottingInfo;
-        potsizeText.text = "Typical Pot Size: " + currentPlant.description.pottingInfo;
     }
 
     // Swaps to the next item in the list

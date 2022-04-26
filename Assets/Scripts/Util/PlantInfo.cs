@@ -10,7 +10,8 @@ using UnityEngine;
 public enum PlantType {
     DonkeysTail,
     SpiderPlant,
-    Scallion
+    Scallion,
+    PeaceLily
 }
 
 // Various soil types plants require
@@ -58,7 +59,7 @@ public class Plant
 
     public PlantType plantType {
         get {
-            return (PlantType)Enum.Parse(typeof(PlantType), name);
+            return (PlantType)Enum.Parse(typeof(PlantType), imageName);
         }
     }
 
@@ -87,6 +88,16 @@ public class Plant
             if (!plantImageSprite) // Load sprite
                 plantImageSprite = Resources.Load<Sprite>(imageFilePath());
             return plantImageSprite;
+        }
+    }
+
+    private Sprite[] plantSprites;
+
+    public Sprite[] PlantSprites {
+        get {
+            if (plantSprites == null)
+                plantSprites = Resources.LoadAll<Sprite>(plantType.ToString());
+            return plantSprites;
         }
     }
 }

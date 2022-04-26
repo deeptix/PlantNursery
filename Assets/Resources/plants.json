@@ -1,11 +1,11 @@
 {
     "plants" :[
         {
-            "name": "DonkeysTail",
+            "name": "Donkeys Tail",
             "imageName": "DonkeysTail",
             "description": {
                 "environmentInfo": "Native to Honduras and Mexico (temperate regions)",
-                "soilInfo": "Well-draining, sandy, and gritty soil; fertilizer is not necessary , but can feed a weak solution of cactus fertilizer two or three times through spring and summer. In winter, don't feed at all.",
+                "soilInfo": "Well-draining, sandy, and gritty soil",
                 "sunlightInfo": "Part sun and part shade, but they like bright light",
                 "wateringInfo": "Every three weeks (or once soil has dried up)",
                 "repottingInfo": "Once the plant has completely filled up the pot (should generally avoid repotting unless necessary)",
@@ -25,11 +25,11 @@
             "growthSchedule": ["3", "9", "18", "32"]
         },
         {
-            "name": "SpiderPlant",
+            "name": "Spider Plant",
             "imageName": "SpiderPlant",
             "description": {
                 "environmentInfo": "Native to tropical and subtropical regions of Africa (relatively dry)",
-                "soilInfo": "Loamy, moist, and well-drained soil; fertilizer is not necessary but small doses of a balanced 10-10-10 fertilizer every 6-8 weeks can boost growth",
+                "soilInfo": "Loamy, moist, and well-drained soil",
                 "sunlightInfo": "Part sun and part shade, but they prefer bright, indirect light",
                 "wateringInfo": "About once a week (or once soil has dried up)",
                 "repottingInfo": "Repot when the roots are big enough",
@@ -53,7 +53,7 @@
             "imageName": "Scallion",
             "description": {
                 "environmentInfo": "Native to Asia but has been found growing in many parts of the world (warm climates)",
-                "soilInfo": "Well-drained soils (e.g. sandy loam, loam, and clay loams); any 1-2-2 ratio fertilizer",
+                "soilInfo": "Well-drained soils (e.g. sandy loam, loam, and clay loams)",
                 "sunlightInfo": "Full sun (at least six hours of direct sunlight on most days)",
                 "wateringInfo": "About 1 inch of water per week (soil should be slightly moist)",
                 "repottingInfo": "Can replant about every month for a continual harvest",
@@ -67,6 +67,30 @@
             },
             "soil": "Loamy",
             "sun": "Full",
+            "wateringSchedule": 1,
+            "minWater": 6,
+            "maxWater": 8,
+            "growthSchedule": ["2", "4", "8", "12"]
+        },
+        {
+            "name": "Peace Lily",
+            "imageName": "PeaceLily",
+            "description": {
+                "environmentInfo": "Native to the tropical rainforests of South America (humid climates)",
+                "soilInfo": "Prefers a soil that can mix drainage and moisture retention (e.g. perlite, peat moss, coir, or loam)",
+                "sunlightInfo": "Bright, indirect sunlight",
+                "wateringInfo": "Water once or twice per week (soil should be slightly moist)",
+                "repottingInfo": "Every year or two (or when suffering from root rot and requires root pruning)",
+                "pottingInfo": "Just slightly larger than the plant's root"
+            },
+            "tasks": {
+                "wateringTask": {
+                    "taskTypeName": "WateringQuota",
+                    "goalValue": 20
+                }
+            },
+            "soil": "Loamy",
+            "sun": "Partial",
             "wateringSchedule": 1,
             "minWater": 6,
             "maxWater": 8,

@@ -36,8 +36,6 @@ public class UpdateDay : MonoBehaviour, IPointerClickHandler
                     skipButton.GetComponent<SkipDay>().IterateDate();
                 }*/
                 GameManager.GetComponent<Calendar>().SetCurrentDate(day);
-                GameManager.GetComponent<Calendar>().SetInteractables();
-                EventSystem.current.SetSelectedGameObject(GameObject.Find(day.ToString()));
             }
         }
     }

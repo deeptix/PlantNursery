@@ -114,6 +114,9 @@ public class PlantStateManager : MonoBehaviour
         displayStats();
 
         EventBus.Broadcast<PlantStateManager>(EventTypes.UpdatedPlant, this);
+
+        // Stop and clear any drainage as time is passing
+        drainManager.clearDrainage();
     }
 
     /* Functions to update plant states based on user actions */

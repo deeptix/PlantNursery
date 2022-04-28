@@ -83,9 +83,10 @@ public class PlantStateManager : MonoBehaviour
         // Currently initializes soil
         soil = requirements.Soil;
 
-        // Plant starts off with the middle amount of water
+        // Plant starts off with the minimum acceptable amount of water 
+        //      --> forces watering on the first day
         idealWater = (requirements.minWater + requirements.maxWater) / 2;
-        water = idealWater;
+        water = requirements.minWater;
 
         // just for debugging purposes --> updating here is unnecessary (only needs to be done in passTime)
         updateAbsorptionRate();
@@ -205,10 +206,9 @@ public class PlantStateManager : MonoBehaviour
     }
 
     // Updates color overlay of plant sprite 
-    // If healthy, color recovers to the original coloring
-    // If unhealthy, color slowly changes to black 
-    private void updateHealthyColor(int numDays) {
-        int sign = (healthState == Health.Healthy) ? 1 : -1;
+    // If sign == 1, color recovers to the original coloring (trying to become healthy)
+    // If sign == -1, color slowly changes to black (becoming unhealthy)
+    private void updateHealthyColor(int numDays, int sign) {
         int multFactor = numDays * sign;
         
         Color currColor = spriteRenderer.color;
@@ -224,18 +224,20 @@ public class PlantStateManager : MonoBehaviour
     private void updateHealthState(int numDays) {
         if (water < requirements.minWater) {
             healthState = Health.Underwatered;
-            ageHealthy = 0;
+            ageHealthy = Math.Min(0, ageHealthy - numDays);
+            updateHealthyColor(numDays, -1);
         } else if (requirements.minWater <= water && water <= requirements.maxWater) {
-            // if plant was previously healthy and still healthy, update number of healthy days
-            if (healthState == Health.Healthy) {
-                ageHealthy += numDays;
+            ageHealthy += numDays;
+            if (ageHealthy >= 0) {
+                healthState = Health.Healthy;
             }
-            healthState = Health.Healthy;
+            updateHealthyColor(numDays, 1);
         } else {
             healthState = Health.Overwatered;
-            ageHealthy = 0;
+            ageHealthy = Math.Min(0, ageHealthy - numDays);
+            updateHealthyColor(numDays, -1);
         }
-        updateHealthyColor(numDays);
+        
     }
 
     // Update growth state based on number of days in a healthy state according to growth schedule

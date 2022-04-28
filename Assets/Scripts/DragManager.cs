@@ -10,6 +10,7 @@ public class DragManager : MonoBehaviour
 
     public void OnMouseDown()
     {
+        Debug.Log("Plant clicked!");
         isDragging = true;
         EventBus.Broadcast<bool, GameObject>(EventTypes.DraggingPlant, true, gameObject);
         oldPosition = transform.position;
@@ -27,7 +28,7 @@ public class DragManager : MonoBehaviour
             if (dropZone.plantHolding == null) {
                 // hit an empty drop zone! change positioning to match drop zone
                 RectTransform dropZoneRect = hit.transform.gameObject.GetComponent<RectTransform>();
-                Vector2 newPosition = new Vector2(dropZoneRect.transform.position.x, dropZoneRect.transform.position.y + ADJ_POSITION);
+                Vector3 newPosition = new Vector3(dropZoneRect.transform.position.x, dropZoneRect.transform.position.y + ADJ_POSITION, -1);
                 transform.position = newPosition;
 
                 // have drop zones update the plants that they're holding

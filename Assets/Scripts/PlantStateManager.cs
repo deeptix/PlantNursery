@@ -53,6 +53,10 @@ public class PlantStateManager : MonoBehaviour
     public float LOWEST_GREEN_COLOR = 0.1f;
     public float LOWEST_BLUE_COLOR = 0.1f;
 
+    public GameObject waterMeter;
+
+    private const float MAX_WATER_AMT = 10;
+
     void Awake() {
         plantSprites = Resources.LoadAll<Sprite>(plantType.ToString());
     }
@@ -128,7 +132,7 @@ public class PlantStateManager : MonoBehaviour
     // Note: A plant can have a maximum of 10 water
     // Note: addWaterAmount can be the time duration in which the user watered the plant for
     public void waterPlant(float addWaterAmount) {
-        water = Math.Min(water + addWaterAmount, 10);
+        water = Math.Min(water + addWaterAmount, MAX_WATER_AMT);
         if (water >= idealWater) {
             drainManager.turnDrainageOn();
         }
@@ -296,6 +300,11 @@ public class PlantStateManager : MonoBehaviour
 
     private void displayStats() {
         stats.text = formatStats();
+        displayWaterLevels();
+    }
+
+    public void displayWaterLevels() {
+        waterMeter.GetComponent<RectTransform>().sizeDelta = new Vector2 (0, water / MAX_WATER_AMT);
     }
 
     private string getSpriteName() {

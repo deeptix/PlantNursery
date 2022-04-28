@@ -120,8 +120,8 @@ public class Calendar : MonoBehaviour
 
     public void SetCurrentDate(System.DateTime date) {
         if (date == currentDate) return;
-        currentDate = date;
         IterateDate(date.Subtract(currentDate).Days);
+        currentDate = date;
     }
 
     public void SetInteractables() 

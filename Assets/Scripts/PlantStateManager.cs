@@ -49,6 +49,9 @@ public class PlantStateManager : MonoBehaviour
     public float RED_ADJ = 0.2f;
     public float GREEN_ADJ = 0.1f;
     public float BLUE_ADJ = 0.1f;
+    public float LOWEST_RED_COLOR = 0.3f;
+    public float LOWEST_GREEN_COLOR = 0.1f;
+    public float LOWEST_BLUE_COLOR = 0.1f;
 
     void Awake() {
         plantSprites = Resources.LoadAll<Sprite>(plantType.ToString());
@@ -183,9 +186,18 @@ public class PlantStateManager : MonoBehaviour
         absorptionRate = numerator / (7*requirements.wateringSchedule);
     }
     
-    // Clamps color components (r,g,b,a) in between 0 and 1 inclusive
-    private float clampColor(float newColorComp) {
-        return Math.Min(Math.Max(0, newColorComp), 1);
+    // Clamps color components (r,g,b,a) in between LOWEST_<color>_COLOR and 1 inclusive
+    private float clampColor(float newColorComp, String color) {
+        switch (color) {
+            case "RED":
+                return Math.Min(Math.Max(LOWEST_RED_COLOR, newColorComp), 1);
+            case "GREEN":
+                return Math.Min(Math.Max(LOWEST_GREEN_COLOR, newColorComp), 1);
+            case "BLUE":
+                return Math.Min(Math.Max(LOWEST_BLUE_COLOR, newColorComp), 1);
+            default:
+                return Math.Min(Math.Max(0, newColorComp), 1);
+        }
     }
 
     // Updates color overlay of plant sprite 
@@ -197,9 +209,9 @@ public class PlantStateManager : MonoBehaviour
         
         Color currColor = spriteRenderer.color;
         if (currColor != Color.white || healthState != Health.Healthy) {
-            float red = clampColor(currColor.r + multFactor * RED_ADJ);
-            float green = clampColor(currColor.g + multFactor * GREEN_ADJ);
-            float blue = clampColor(currColor.b + multFactor * BLUE_ADJ);
+            float red = clampColor(currColor.r + multFactor * RED_ADJ, "RED");
+            float green = clampColor(currColor.g + multFactor * GREEN_ADJ, "GREEN");
+            float blue = clampColor(currColor.b + multFactor * BLUE_ADJ, "BLUE");
             spriteRenderer.color = new Color(red, green, blue, currColor.a);
         }
     }

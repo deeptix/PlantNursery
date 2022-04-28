@@ -6477,7 +6477,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e9a8bedff58d42ea872c2739699e5cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  plantHolding: {fileID: 0}
+  plantHolding: {fileID: 2065700049}
   sun: 2
 --- !u!61 &196148958
 BoxCollider2D:
@@ -30693,6 +30693,38 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1270049079637109165, guid: 2dff3911599004039a804eb034a455f7, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1270049079637109165, guid: 2dff3911599004039a804eb034a455f7, type: 3}
+      propertyPath: lengthInSec
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1270049079637109165, guid: 2dff3911599004039a804eb034a455f7, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1270049079637109165, guid: 2dff3911599004039a804eb034a455f7, type: 3}
+      propertyPath: ShapeModule.type
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1270049079637109165, guid: 2dff3911599004039a804eb034a455f7, type: 3}
+      propertyPath: ShapeModule.m_Scale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1270049079637109165, guid: 2dff3911599004039a804eb034a455f7, type: 3}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1270049079637109165, guid: 2dff3911599004039a804eb034a455f7, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1270049079637109165, guid: 2dff3911599004039a804eb034a455f7, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 2997780554679931083, guid: 2dff3911599004039a804eb034a455f7, type: 3}
       propertyPath: m_Camera
       value: 
@@ -30742,7 +30774,23 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5261046092384643735, guid: 2dff3911599004039a804eb034a455f7, type: 3}
+      propertyPath: sun
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5261046092384643735, guid: 2dff3911599004039a804eb034a455f7, type: 3}
+      propertyPath: RED_ADJ
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5261046092384643735, guid: 2dff3911599004039a804eb034a455f7, type: 3}
+      propertyPath: BLUE_ADJ
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5261046092384643735, guid: 2dff3911599004039a804eb034a455f7, type: 3}
       propertyPath: SOIL_ADJ
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5261046092384643735, guid: 2dff3911599004039a804eb034a455f7, type: 3}
+      propertyPath: GREEN_ADJ
       value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 5261046092384643735, guid: 2dff3911599004039a804eb034a455f7, type: 3}
@@ -30764,6 +30812,22 @@ PrefabInstance:
     - target: {fileID: 5261046092384643739, guid: 2dff3911599004039a804eb034a455f7, type: 3}
       propertyPath: m_Name
       value: Scallion
+      objectReference: {fileID: 0}
+    - target: {fileID: 8670046284832395719, guid: 2dff3911599004039a804eb034a455f7, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.9558672
+      objectReference: {fileID: 0}
+    - target: {fileID: 8670046284832395719, guid: 2dff3911599004039a804eb034a455f7, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.06586583
+      objectReference: {fileID: 0}
+    - target: {fileID: 8670046284832395719, guid: 2dff3911599004039a804eb034a455f7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -3.71
+      objectReference: {fileID: 0}
+    - target: {fileID: 8670046284832395719, guid: 2dff3911599004039a804eb034a455f7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2dff3911599004039a804eb034a455f7, type: 3}

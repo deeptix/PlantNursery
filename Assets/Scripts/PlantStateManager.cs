@@ -28,12 +28,13 @@ public class PlantStateManager : MonoBehaviour
     private GameManager gameManager;
     private RectTransform rectTransform; 
     private DrainageManager drainManager;
+    private SpriteRenderer spriteRenderer;
     public Sprite[] plantSprites;
     public TMP_Text stats;
     public PlantType plantType;     // Plant type
     public Plant requirements;      // Static care requirements for plant
     public int age;                 // Age of plant in days
-    public int ageHealthy;         // Age of plant in a healthy state
+    public int ageHealthy;          // Age of plant in a healthy state
     public Health healthState;      // Dynamic health state of plant
     public Growth growthState;      // Dynamic growth state of plant
     public float water;             // Amount of water plant has
@@ -45,6 +46,12 @@ public class PlantStateManager : MonoBehaviour
 
     public float SUNLIGHT_ADJ = 0.1f; // Absorption adjustment for incorrect sunlight
     public float SOIL_ADJ = 0.1f;     // Absorption adjustment for incorrect soil
+    public float RED_ADJ = 0.2f;
+    public float GREEN_ADJ = 0.1f;
+    public float BLUE_ADJ = 0.1f;
+    public float LOWEST_RED_COLOR = 0.3f;
+    public float LOWEST_GREEN_COLOR = 0.1f;
+    public float LOWEST_BLUE_COLOR = 0.1f;
 
     void Awake() {
         plantSprites = Resources.LoadAll<Sprite>(plantType.ToString());
@@ -56,6 +63,9 @@ public class PlantStateManager : MonoBehaviour
         rectTransform = GetComponent<RectTransform>();
         drainManager = transform.Find("Pot").GetComponent<DrainageManager>();
 
+        string childSpriteName = plantType.ToString() + "Plant";
+        spriteRenderer = transform.Find(childSpriteName).GetComponent<SpriteRenderer>();
+
         // Store plant care requirements 
         if (!gameManager.GetPlant(plantType, out requirements)) {
             Debug.Log("Could not find plant.");
@@ -65,10 +75,9 @@ public class PlantStateManager : MonoBehaviour
         healthState = Health.Healthy;
         growthState = Growth.Sprout;
 
-        // TODO: correctly initialize soil + sun based on given pot/positioning?
-        // Currently initializes soil + sun to the plant care requirements
+        // TODO: correctly initialize soil 
+        // Currently initializes soil
         soil = requirements.Soil;
-        sun = requirements.Sun;
 
         // Plant starts off with the middle amount of water
         idealWater = (requirements.minWater + requirements.maxWater) / 2;
@@ -108,6 +117,9 @@ public class PlantStateManager : MonoBehaviour
         displayStats();
 
         EventBus.Broadcast<PlantStateManager>(EventTypes.UpdatedPlant, this);
+
+        // Stop and clear any drainage as time is passing
+        drainManager.clearDrainage();
     }
 
     /* Functions to update plant states based on user actions */
@@ -154,10 +166,9 @@ public class PlantStateManager : MonoBehaviour
 
     /* Absorption Rate:
     - if external conditions are correct, calculated as (maxWater - minWater) / numDaysTillNextWater
-    - affected by incorrect sunlight/soil
     - each day, the plant will lose absorptionRate water
-    - this means that if plants starts off with maxWater, then after wateringSchedule weeks,
-        plant will have minWater left
+    - this means that if plants starts off with maxWater, then after wateringSchedule weeks, plant will have minWater left
+    - affected by incorrect sunlight/soil
     */
     private void updateAbsorptionRate() {
         float numerator = requirements.maxWater - requirements.minWater;
@@ -175,9 +186,34 @@ public class PlantStateManager : MonoBehaviour
         absorptionRate = numerator / (7*requirements.wateringSchedule);
     }
     
-    // Returns true <==> external conditions (soil, sun) match plant requirements
-    private bool correctExternalConditions() {
-        return (soil == requirements.Soil && sun == requirements.Sun);
+    // Clamps color components (r,g,b,a) in between LOWEST_<color>_COLOR and 1 inclusive
+    private float clampColor(float newColorComp, String color) {
+        switch (color) {
+            case "RED":
+                return Math.Min(Math.Max(LOWEST_RED_COLOR, newColorComp), 1);
+            case "GREEN":
+                return Math.Min(Math.Max(LOWEST_GREEN_COLOR, newColorComp), 1);
+            case "BLUE":
+                return Math.Min(Math.Max(LOWEST_BLUE_COLOR, newColorComp), 1);
+            default:
+                return Math.Min(Math.Max(0, newColorComp), 1);
+        }
+    }
+
+    // Updates color overlay of plant sprite 
+    // If healthy, color recovers to the original coloring
+    // If unhealthy, color slowly changes to black 
+    private void updateHealthyColor(int numDays) {
+        int sign = (healthState == Health.Healthy) ? 1 : -1;
+        int multFactor = numDays * sign;
+        
+        Color currColor = spriteRenderer.color;
+        if (currColor != Color.white || healthState != Health.Healthy) {
+            float red = clampColor(currColor.r + multFactor * RED_ADJ, "RED");
+            float green = clampColor(currColor.g + multFactor * GREEN_ADJ, "GREEN");
+            float blue = clampColor(currColor.b + multFactor * BLUE_ADJ, "BLUE");
+            spriteRenderer.color = new Color(red, green, blue, currColor.a);
+        }
     }
 
     // Update health state based on water amount
@@ -195,47 +231,45 @@ public class PlantStateManager : MonoBehaviour
             healthState = Health.Overwatered;
             ageHealthy = 0;
         }
-
-        // if plant's external conditions are not correct, stop growth by setting ageHealthy to 0
-        if (!correctExternalConditions()) {
-            ageHealthy = 0;
-        }
+        updateHealthyColor(numDays);
     }
 
     // Update growth state based on number of days in a healthy state according to growth schedule
     // If plant grows, reset healthy age to 0 for next stage
+    // Note: Plant can only grow if the color is fully recovered to white
     private void updateGrowthState() {
         Growth newGrowthState = growthState;
-
-        switch (growthState) {
-            case Growth.Sprout:
-                if (ageHealthy >= requirements.growthSchedule[0]) {
-                    newGrowthState = Growth.Primary;
-                    ageHealthy = 0;
-                }
-                break;
-            case Growth.Primary:
-                if (ageHealthy >= requirements.growthSchedule[1]) {
-                    newGrowthState = Growth.Secondary;
-                    ageHealthy = 0;
-                }
-                break;
-            case Growth.Secondary:
-                if (ageHealthy >= requirements.growthSchedule[2]) {
-                    newGrowthState = Growth.Mature;
-                    ageHealthy = 0;
-                }
-                break;
-            case Growth.Mature:
-                if (requirements.growthSchedule.Length >= 4 && ageHealthy >= requirements.growthSchedule[3]) {
-                    newGrowthState = Growth.Overgrown;
-                    ageHealthy = 0;
-                }
-                break;
-            default:
-                break;
+        if (spriteRenderer.color == Color.white) {
+            switch (growthState) {
+                case Growth.Sprout:
+                    if (ageHealthy >= requirements.growthSchedule[0]) {
+                        newGrowthState = Growth.Primary;
+                        ageHealthy = 0;
+                    }
+                    break;
+                case Growth.Primary:
+                    if (ageHealthy >= requirements.growthSchedule[1]) {
+                        newGrowthState = Growth.Secondary;
+                        ageHealthy = 0;
+                    }
+                    break;
+                case Growth.Secondary:
+                    if (ageHealthy >= requirements.growthSchedule[2]) {
+                        newGrowthState = Growth.Mature;
+                        ageHealthy = 0;
+                    }
+                    break;
+                case Growth.Mature:
+                    if (requirements.growthSchedule.Length >= 4 && ageHealthy >= requirements.growthSchedule[3]) {
+                        newGrowthState = Growth.Overgrown;
+                        ageHealthy = 0;
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
-
+        
         if (newGrowthState != growthState) {
             growthState = newGrowthState;
             EventBus.Broadcast<PlantStateManager>(EventTypes.AgedPlant, this);
@@ -299,7 +333,6 @@ public class PlantStateManager : MonoBehaviour
 
     private void updateSprite() {
         string spriteName = getSpriteName();
-        string childSpriteName = plantType.ToString() + "Plant";
-        transform.Find(childSpriteName).GetComponent<SpriteRenderer>().sprite = getSprite(spriteName);
+        spriteRenderer.sprite = getSprite(spriteName);
     }
 }

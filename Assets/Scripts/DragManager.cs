@@ -34,10 +34,12 @@ public class DragManager : MonoBehaviour
                 EventBus.Broadcast<bool, GameObject>(EventTypes.DraggingPlant, false, gameObject);
             } else {
                 // drop zone already had a plant, go back to original starting place
+                EventBus.Broadcast<bool, GameObject>(EventTypes.DraggingPlant, false, null);
                 transform.position = oldPosition;
             }
         } else {
             // did not land in a drop zone, go back to original starting place
+            EventBus.Broadcast<bool, GameObject>(EventTypes.DraggingPlant, false, null);
             transform.position = oldPosition;
         }
         isDragging = false;

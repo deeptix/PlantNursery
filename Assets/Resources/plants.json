@@ -92,8 +92,8 @@
             "soil": "Loamy",
             "sun": "Sun",
             "wateringSchedule": 1,
-            "minWater": 6,
-            "maxWater": 8,
+            "minWater": 4,
+            "maxWater": 6,
             "growthSchedule": ["2", "4", "8"]
         },
         {

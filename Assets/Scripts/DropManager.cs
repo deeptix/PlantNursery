@@ -10,9 +10,16 @@ public class DropManager : MonoBehaviour
     GameObject dropzoneArea;
     BoxCollider2D boxCollider2D;
 
+    // Updates the sunlight for the held plant
+    void updatePlantSun() {
+        plantHolding.GetComponent<PlantStateManager>().movePlant(sun);
+    }
+
+    // Start is called before the first frame update
     void Start()
     {
         EventBus.AddListener(EventTypes.DraggingPlant, new CallBack<bool, GameObject>(toggleCollider));
+        if (plantHolding != null) updatePlantSun();
 
         dropzoneArea = Instantiate(dropzonePrefab);
         dropzoneArea.transform.SetParent(transform);
@@ -34,7 +41,7 @@ public class DropManager : MonoBehaviour
         dropzoneArea.transform.localScale = new Vector3(xResize, yResize, 1);
     }
 
-    void toggleCollider(bool isDragging, GameObject plantDropped) 
+    void toggleCollider(bool isDragging, GameObject plantDropped)
     {
         dropzoneArea.SetActive(isDragging);
         if (!isDragging) {
@@ -44,7 +51,7 @@ public class DropManager : MonoBehaviour
                 if (gameObject.GetComponent<BoxCollider2D>().IsTouching(plantDropped.GetComponent<BoxCollider2D>())) {
                     // collided! update plant holding accordingly
                     plantHolding = plantDropped;
-                    plantHolding.GetComponent<PlantStateManager>().movePlant(sun);
+                    updatePlantSun();
                 } else {
                     // no collision --> set plant holding to null
                     plantHolding = null;

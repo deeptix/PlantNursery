@@ -10,4 +10,8 @@ public class DrainageManager : MonoBehaviour
         drainingWater.Emit(1);
         drainingWater.Play();
     }
+
+    public void clearDrainage() {
+        drainingWater.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+    }
 }

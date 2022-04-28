@@ -40,15 +40,15 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 838643994521407374}
   serializedVersion: 7
-  lengthInSec: 5
+  lengthInSec: 2.5
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
-  looping: 1
+  looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -168,7 +168,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.4
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -659,7 +659,7 @@ ParticleSystem:
   ShapeModule:
     serializedVersion: 6
     enabled: 1
-    type: 4
+    type: 5
     angle: 30
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
@@ -5321,6 +5321,7 @@ MonoBehaviour:
     maxWater: 0
     growthSchedule: 
   age: 0
+  ageHealthy: 0
   healthState: 0
   growthState: 0
   water: 0
@@ -5328,6 +5329,12 @@ MonoBehaviour:
   sun: 0
   SUNLIGHT_ADJ: 0.1
   SOIL_ADJ: 0.1
+  RED_ADJ: 0.2
+  GREEN_ADJ: 0.1
+  BLUE_ADJ: 0.1
+  LOWEST_RED_COLOR: 0.3
+  LOWEST_GREEN_COLOR: 0.1
+  LOWEST_BLUE_COLOR: 0.1
 --- !u!1001 &5261046092048022918
 PrefabInstance:
   m_ObjectHideFlags: 0

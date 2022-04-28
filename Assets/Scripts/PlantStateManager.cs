@@ -72,10 +72,9 @@ public class PlantStateManager : MonoBehaviour
         healthState = Health.Healthy;
         growthState = Growth.Sprout;
 
-        // TODO: correctly initialize soil + sun based on given pot/positioning?
-        // Currently initializes soil + sun to the plant care requirements
+        // TODO: correctly initialize soil 
+        // Currently initializes soil
         soil = requirements.Soil;
-        sun = requirements.Sun;
 
         // Plant starts off with the middle amount of water
         idealWater = (requirements.minWater + requirements.maxWater) / 2;
@@ -161,10 +160,9 @@ public class PlantStateManager : MonoBehaviour
 
     /* Absorption Rate:
     - if external conditions are correct, calculated as (maxWater - minWater) / numDaysTillNextWater
-    - affected by incorrect sunlight/soil
     - each day, the plant will lose absorptionRate water
-    - this means that if plants starts off with maxWater, then after wateringSchedule weeks,
-        plant will have minWater left
+    - this means that if plants starts off with maxWater, then after wateringSchedule weeks, plant will have minWater left
+    - affected by incorrect sunlight/soil
     */
     private void updateAbsorptionRate() {
         float numerator = requirements.maxWater - requirements.minWater;
@@ -182,11 +180,6 @@ public class PlantStateManager : MonoBehaviour
         absorptionRate = numerator / (7*requirements.wateringSchedule);
     }
     
-    // Returns true <==> external conditions (soil, sun) match plant requirements
-    private bool correctExternalConditions() {
-        return (soil == requirements.Soil && sun == requirements.Sun);
-    }
-
     // Clamps color components (r,g,b,a) in between 0 and 1 inclusive
     private float clampColor(float newColorComp) {
         return Math.Min(Math.Max(0, newColorComp), 1);
@@ -224,16 +217,11 @@ public class PlantStateManager : MonoBehaviour
             ageHealthy = 0;
         }
         updateHealthyColor(numDays);
-
-        // Nikita: commented this out bc plant should still grow even if the external conditions are incorrect
-        // if plant's external conditions are not correct, stop growth by setting ageHealthy to 0
-        // if (!correctExternalConditions()) {
-        //     ageHealthy = 0;
-        // }
     }
 
     // Update growth state based on number of days in a healthy state according to growth schedule
     // If plant grows, reset healthy age to 0 for next stage
+    // Note: Plant can only grow if the color is fully recovered to white
     private void updateGrowthState() {
         Growth newGrowthState = growthState;
         if (spriteRenderer.color == Color.white) {

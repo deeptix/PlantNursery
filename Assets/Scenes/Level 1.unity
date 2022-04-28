@@ -30774,6 +30774,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5261046092384643735, guid: 2dff3911599004039a804eb034a455f7, type: 3}
+      propertyPath: sun
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5261046092384643735, guid: 2dff3911599004039a804eb034a455f7, type: 3}
       propertyPath: RED_ADJ
       value: 0.2
       objectReference: {fileID: 0}

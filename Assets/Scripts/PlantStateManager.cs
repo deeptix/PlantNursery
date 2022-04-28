@@ -195,14 +195,15 @@ public class PlantStateManager : MonoBehaviour
     // Updates color overlay of plant sprite 
     // If healthy, color recovers to the original coloring
     // If unhealthy, color slowly changes to black 
-    private void updateHealthyColor() {
+    private void updateHealthyColor(int numDays) {
         int sign = (healthState == Health.Healthy) ? 1 : -1;
+        int multFactor = numDays * sign;
         
         Color currColor = spriteRenderer.color;
         if (currColor != Color.white || healthState != Health.Healthy) {
-            float red = clampColor(currColor.r + sign * RED_ADJ);
-            float green = clampColor(currColor.g + sign * GREEN_ADJ);
-            float blue = clampColor(currColor.b + sign * BLUE_ADJ);
+            float red = clampColor(currColor.r + multFactor * RED_ADJ);
+            float green = clampColor(currColor.g + multFactor * GREEN_ADJ);
+            float blue = clampColor(currColor.b + multFactor * BLUE_ADJ);
             spriteRenderer.color = new Color(red, green, blue, currColor.a);
         }
     }
@@ -222,7 +223,7 @@ public class PlantStateManager : MonoBehaviour
             healthState = Health.Overwatered;
             ageHealthy = 0;
         }
-        updateHealthyColor();
+        updateHealthyColor(numDays);
 
         // Nikita: commented this out bc plant should still grow even if the external conditions are incorrect
         // if plant's external conditions are not correct, stop growth by setting ageHealthy to 0

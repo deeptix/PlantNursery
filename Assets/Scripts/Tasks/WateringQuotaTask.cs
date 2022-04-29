@@ -15,10 +15,10 @@ public class WateringQuotaTask : Task
         this.plantType = plantType;
         this.quotaVal = quotaVal;
 
-        EventBus.AddListener<Plant>(EventTypes.WateredPlant, UpdateCount);
+        EventBus.AddListener<PlantStateManager>(EventTypes.WateredPlant, UpdateCount);
     }
 
-    private void UpdateCount(Plant plant) 
+    private void UpdateCount(PlantStateManager plant) 
     {
         if (plant.plantType == plantType) {
             currentVal = Mathf.Min(currentVal + 1, quotaVal);

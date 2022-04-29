@@ -25,10 +25,10 @@ public class PhoneManager : MonoBehaviour
         showingPhone = !showingPhone;
         if (!showingPhone) {
             HidePhone();
-            gameUIManager.ShowToolbar();
+            // gameUIManager.ShowToolbar();
         } else {
             ShowPhone();
-            gameUIManager.HideToolbar();
+            // gameUIManager.HideToolbar();
         }
     }
 
@@ -57,6 +57,14 @@ public class PhoneManager : MonoBehaviour
 
     public void HidePhoneCamera() {
         cameraPhone.HidePhone();
+        phoneButton.SetActive(true);
+    }
+
+    public void HidePhoneButton() {
+        phoneButton.SetActive(false);
+    }
+
+    public void ShowPhoneButton() {
         phoneButton.SetActive(true);
     }
 }

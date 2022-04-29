@@ -8,10 +8,16 @@ public class Zoom : MonoBehaviour
     private GameUIManager gameUIManager;
     private PhoneManager phoneManager;
 
+    public bool IsZoomed;
+
     private void Start()
     {
         gameUIManager = GameObject.Find("GameUIManager").GetComponent<GameUIManager>();
         phoneManager = GameObject.Find("PhoneManager").GetComponent<PhoneManager>();
+
+        IsZoomed = false;
+        gameUIManager.HideToolbar();
+        phoneManager.ActivateCameraButton();
     }
 
     // Update is called once per frame
@@ -31,19 +37,23 @@ public class Zoom : MonoBehaviour
                 timerSinceLastClick = 0.2f; // start timer
             else // double clicked 
             {
-                if (Camera.main.orthographicSize > 1)
+                if (!IsZoomed)
                 {
                     Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, -10);
-                    Camera.main.orthographicSize = 1;
-                    gameUIManager.HideToolbar();
+                    Camera.main.orthographicSize = 2.5f;
+                    gameUIManager.ShowToolbar();
                     phoneManager.DeactivateCameraButton();
+                    phoneManager.HidePhoneButton(); // TODO: fix UI so this isn't disabled
+                    IsZoomed = true;
                 }
                 else
                 {
                     Camera.main.transform.position = new Vector3(0, 0, -10);
                     Camera.main.orthographicSize = 5;
-                    gameUIManager.ShowToolbar();
+                    gameUIManager.HideToolbar();
                     phoneManager.ActivateCameraButton();
+                    phoneManager.ShowPhoneButton(); // TODO: fix UI so this isn't disabled
+                    IsZoomed = false;
                 }
                 timerSinceLastClick = 0f; // reset timer
             }

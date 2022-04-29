@@ -22,6 +22,8 @@ public class CameraPhone : MonoBehaviour
     private bool resetComplete = false;
     private PlantType plantType;
 
+    private BoxCollider2D boxCollider;
+
     public void OnMouseDown()
     {
         isDragging = true;
@@ -39,8 +41,11 @@ public class CameraPhone : MonoBehaviour
         phoneManager = GameObject.Find("PhoneManager").GetComponent<PhoneManager>();
         encyclopediaManager = GameObject.Find("EncyclopediaManager").GetComponent<EncyclopediaManager>();
 
+        boxCollider = GetComponent<BoxCollider2D>();
+
         defaultPosition = transform.position;
         SetDefaultUI();
+        HidePhone();
     }
 
     public void GoToDefaultPosition()
@@ -100,10 +105,14 @@ public class CameraPhone : MonoBehaviour
 
     public void HidePhone() {
         phone.SetActive(false);
+        if (boxCollider == null) boxCollider = GetComponent<BoxCollider2D>();
+        boxCollider.enabled = false;
     }
 
     public void ShowPhone() {
         GoToDefaultPosition();
         phone.SetActive(true);
+        if (boxCollider == null) boxCollider = GetComponent<BoxCollider2D>();
+        boxCollider.enabled = true;
     }
 }

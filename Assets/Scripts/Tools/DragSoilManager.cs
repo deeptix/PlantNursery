@@ -13,12 +13,22 @@ public class DragSoilManager : MonoBehaviour
     public ParticleSystem fallingSoil;
     private Vector2 oldPosition;
 
+    private SoundManager soundManager;
+
+    void OnEnable()
+    {
+        Vector3 cameraPos = Camera.main.transform.position;
+        transform.position = new Vector3(cameraPos.x + 1.5f, cameraPos.y, 0);
+    }
+
     public void OnMouseDown()
     {
         isDragging = true;
         isSoilAdded = false;
         soilChangeManager = GameObject.Find("SoilManager").GetComponent<SoilChangeManager>();
         oldPosition = transform.position;
+
+        soundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
     }
 
     public void OnMouseUp()
@@ -37,6 +47,8 @@ public class DragSoilManager : MonoBehaviour
             fallingSoil.Play();
             hit.transform.gameObject.GetComponent<PlantStateManager>().changeSoil(soilChangeManager.GetSoilType());
             isSoilAdded = true;
+
+            soundManager.PlaySoilSound();
         }
 
         isDragging = false;
@@ -53,8 +65,8 @@ public class DragSoilManager : MonoBehaviour
         {
             soil.SetActive(true);
             transform.position = oldPosition;
-            gameObject.SetActive(false);
             isSoilAdded = false;
+            gameObject.SetActive(false);
         }
     }
 }

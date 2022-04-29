@@ -20,7 +20,7 @@ public enum Growth
     Sprout,      // Seedling
     Primary,     // First growth stage
     Secondary,   // Second growth stage
-    Mature,      // Fully grown 
+    Mature,      // Fully grown
     Overgrown    // Needs trimming
 }
 
@@ -28,7 +28,7 @@ public class PlantStateManager : MonoBehaviour
 {
 
     private GameManager gameManager;
-    private RectTransform rectTransform; 
+    private RectTransform rectTransform;
     private DrainageManager drainManager;
     private SpriteRenderer spriteRenderer;
     public Sprite[] plantSprites;
@@ -74,7 +74,7 @@ public class PlantStateManager : MonoBehaviour
         string childSpriteName = plantType.ToString() + "Plant";
         spriteRenderer = transform.Find(childSpriteName).GetComponent<SpriteRenderer>();
 
-        // Store plant care requirements 
+        // Store plant care requirements
         if (!gameManager.GetPlant(plantType, out requirements))
         {
             Debug.Log("Could not find plant.");
@@ -84,11 +84,11 @@ public class PlantStateManager : MonoBehaviour
         healthState = Health.Healthy;
         growthState = Growth.Sprout;
 
-        // TODO: correctly initialize soil 
+        // TODO: correctly initialize soil
         // Currently initializes soil
         soil = requirements.Soil;
 
-        // Plant starts off with the minimum acceptable amount of water 
+        // Plant starts off with the minimum acceptable amount of water
         //      --> forces watering on the first day
         idealWater = (requirements.minWater + requirements.maxWater) / 2;
         water = requirements.minWater;
@@ -148,7 +148,7 @@ public class PlantStateManager : MonoBehaviour
 
     public void movePlant(Sunlight newSun) {
         sun = newSun;
-        
+
         // just for debugging purposes --> updating here is unnecessary (only needs to be done in passTime)
         updateAbsorptionRate();
 
@@ -166,7 +166,7 @@ public class PlantStateManager : MonoBehaviour
         displayStats();
     }
 
-    /* Potential feature: temperature functionality 
+    /* Potential feature: temperature functionality
     // Updates the temperature when user changes the temperature
     public void changeTemperature(int newTemp) {
         temp = newTemp;
@@ -185,7 +185,7 @@ public class PlantStateManager : MonoBehaviour
     private void updateAbsorptionRate() {
         float numerator = requirements.maxWater - requirements.minWater;
 
-        // Too much sun --> increase absorption rate 
+        // Too much sun --> increase absorption rate
         // Too little sun --> decrease absorption rate
         // (small sunlight value, high retention rate <--> large sunlight value, low retention rate)
         numerator += SUNLIGHT_ADJ * (sun - requirements.Sun);
@@ -204,7 +204,7 @@ public class PlantStateManager : MonoBehaviour
         return (soil == requirements.Soil);
         absorptionRate = numerator / (7*requirements.wateringSchedule);
     }
-    
+
     // Clamps color components (r,g,b,a) in between LOWEST_<color>_COLOR and 1 inclusive
     private float clampColor(float newColorComp, String color) {
         switch (color) {
@@ -219,12 +219,12 @@ public class PlantStateManager : MonoBehaviour
         }
     }
 
-    // Updates color overlay of plant sprite 
+    // Updates color overlay of plant sprite
     // If sign == 1, color recovers to the original coloring (trying to become healthy)
     // If sign == -1, color slowly changes to black (becoming unhealthy)
     private void updateHealthyColor(int numDays, int sign) {
         int multFactor = numDays * sign;
-        
+
         Color currColor = spriteRenderer.color;
         if (currColor != Color.white || healthState != Health.Healthy) {
             float red = clampColor(currColor.r + multFactor * RED_ADJ, "RED");
@@ -273,7 +273,7 @@ public class PlantStateManager : MonoBehaviour
             ageHealthy = Math.Min(0, ageHealthy - numDays);
             updateHealthyColor(numDays, -1);
         }
-        
+
     }
 
     // Update growth state based on number of days in a healthy state according to growth schedule
@@ -311,7 +311,7 @@ public class PlantStateManager : MonoBehaviour
                     break;
             }
         }
-        
+
         if (newGrowthState != growthState)
         {
             growthState = newGrowthState;

@@ -59,24 +59,23 @@ public class SoilChangeManager : MonoBehaviour
     private void ChangeSoil()
     {
         Color newColor;
-        if (soil == SoilTypes.Sandy)
+        switch (soil) 
         {
-            newColor = new Vector4(0.26f, 0.22f, 0.13f, 1f);
-            settings.startColor = newColor;
-        }
-        else if (soil == SoilTypes.Silty)
-        {
-            newColor = new Vector4(0.18f, 0.16f, 0.13f, 1f);
-            settings.startColor = newColor;
-        }
-        else if (soil == SoilTypes.Loamy)
-        {
-            newColor = new Vector4(0.69f, 0.51f, 0.10f, 1f);
-            settings.startColor = newColor;
-        }
-        else
-        {
-            settings.startColor = Color.black;
+            case SoilTypes.Sandy:
+                newColor = new Color(0.26f, 0.22f, 0.13f, 1f);
+                settings.startColor = newColor;
+                break;
+            case SoilTypes.Silty:
+                newColor = new Color(0.18f, 0.16f, 0.13f, 1f);
+                settings.startColor = newColor;
+                break;
+            case SoilTypes.Loamy:
+                newColor = new Color(0.69f, 0.51f, 0.10f, 1f);
+                settings.startColor = newColor;
+                break;
+            default:
+                settings.startColor = Color.black;
+                break;
         }
     }
 }

@@ -7,8 +7,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 
-public enum PlantType
-{
+public enum PlantType {
     DonkeysTail,
     SpiderPlant,
     Scallion,
@@ -17,8 +16,7 @@ public enum PlantType
 
 // Various soil types plants require
 // Ordered by ability to retain water, highest to lowest
-public enum SoilTypes
-{
+public enum SoilTypes {
     Clay = 0,
     Loamy = 1,
     Silty = 2,
@@ -27,8 +25,7 @@ public enum SoilTypes
 
 // Various amounts of sunlight plants require
 // Ordered from least to most sunlight
-public enum Sunlight
-{
+public enum Sunlight {
     Shade = 0,      // Full shade
     Partial = 1,    // Partial shade/sunlight
     Sun = 2,        // Full sunlight
@@ -61,10 +58,8 @@ public class Plant
     public PlantDescription description;    // All the English description for the plant
     public PlantTasks tasks;                // All the Tasks associated for the plant
 
-    public PlantType plantType
-    {
-        get
-        {
+    public PlantType plantType {
+        get {
             return (PlantType)Enum.Parse(typeof(PlantType), imageName);
         }
     }
@@ -72,20 +67,16 @@ public class Plant
     // Insert any other numbers required for the plant
     public string soil;                  // Soil required for plant
 
-    public SoilTypes Soil
-    {
-        get
-        {
+    public SoilTypes Soil {
+        get {
             return (SoilTypes)Enum.Parse(typeof(SoilTypes), soil);
         }
     }
 
     public string sun;                    // Sunlight required for plant
 
-    public Sunlight Sun
-    {
-        get
-        {
+    public Sunlight Sun {
+        get {
             return (Sunlight)Enum.Parse(typeof(Sunlight), sun);
         }
     }
@@ -101,17 +92,14 @@ public class Plant
     private const string resourceFilePath = "Images";
 
     // Constructs the file path to the plant's image
-    private string imageFilePath()
-    {
+    private string imageFilePath() {
         return resourceFilePath + "/" + imageName;
     }
 
     private Sprite plantImageSprite;
 
-    public Sprite PlantImage
-    {
-        get
-        {
+    public Sprite PlantImage {
+        get {
             if (!plantImageSprite) // Load sprite
                 plantImageSprite = Resources.Load<Sprite>(imageFilePath());
             return plantImageSprite;
@@ -120,22 +108,18 @@ public class Plant
 
     private Sprite[] plantSprites;
 
-    public Sprite[] PlantSprites
-    {
-        get
-        {
+    public Sprite[] PlantSprites {
+        get {
             if (plantSprites == null)
                 plantSprites = Resources.LoadAll<Sprite>(plantType.ToString());
             return plantSprites;
         }
     }
 
-    private string getSpriteName(Growth growthState, Health healthState)
-    {
+    private string getSpriteName(Growth growthState, Health healthState) {
         string spriteName = plantType.ToString().ToLower() + "_";
         string lowerHealthState = healthState.ToString().ToLower();
-        switch (growthState)
-        {
+        switch (growthState) {
             case Growth.Sprout:
                 spriteName += "sprout";
                 break;
@@ -155,13 +139,10 @@ public class Plant
         return spriteName;
     }
 
-    public Sprite GetSprite(Growth growthState, Health healthState)
-    {
+    public Sprite GetSprite(Growth growthState, Health healthState) {
         string spriteName = getSpriteName(growthState, healthState);
-        foreach (Sprite plantSprite in PlantSprites)
-        {
-            if (plantSprite.name == spriteName)
-            {
+        foreach (Sprite plantSprite in PlantSprites) {
+            if (plantSprite.name == spriteName) {
                 return plantSprite;
             }
         }

@@ -62,6 +62,9 @@ public class NoteManager : MonoBehaviour
     }
 
     public void ExpandNote() {
+        oldPos = transform.position;
+        oldScale = transform.localScale;
+
         startPos = transform.position;
         startScale = transform.localScale;
 

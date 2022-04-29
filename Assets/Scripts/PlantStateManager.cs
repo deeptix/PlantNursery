@@ -202,7 +202,6 @@ public class PlantStateManager : MonoBehaviour
     private bool correctExternalConditions()
     {
         return (soil == requirements.Soil);
-        absorptionRate = numerator / (7*requirements.wateringSchedule);
     }
 
     // Clamps color components (r,g,b,a) in between LOWEST_<color>_COLOR and 1 inclusive

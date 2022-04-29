@@ -429,7 +429,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 678294475}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66b02d44c72614400aba74ad97abad5e, type: 3}
+  m_Script: {fileID: 11500000, guid: 7191c7e03879392439e130f472349b3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 1572975862}
@@ -534,8 +534,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4f4f0cb4ef30409db5779b279bd164e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  plantSprites: []
   stats: {fileID: 860835242}
-  plantName: Spider Plant
+  plantType: 0
   requirements:
     name: 
     imageName: 
@@ -558,7 +559,6 @@ MonoBehaviour:
   water: 0
   soil: 0
   sun: 0
-  oneDayButton: {fileID: 560000340}
 --- !u!1 &860835240
 GameObject:
   m_ObjectHideFlags: 0
@@ -942,7 +942,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1621694601}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 199c443b046064b298eaa2495c077717, type: 3}
+  m_Script: {fileID: 11500000, guid: d434b5ed3ef1f2c45a5e02ac44763ca2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!212 &1621694604

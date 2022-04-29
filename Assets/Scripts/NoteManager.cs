@@ -65,7 +65,7 @@ public class NoteManager : MonoBehaviour
         startPos = transform.position;
         startScale = transform.localScale;
 
-        newPos = UnityEngine.Camera.main.transform.position;
+        newPos = Camera.main.transform.position;
         newPos.z = 0;
         newScale = new Vector3(finalScale, finalScale, finalScale);
         newSortingOrder = 5;
@@ -78,6 +78,7 @@ public class NoteManager : MonoBehaviour
         noteInput.GetComponent<TMP_InputField>().text = noteText.GetComponent<TMP_Text>().text;
         canvas.sortingOrder = newSortingOrder;
 
+        gameUIManager.SetNotesStatus(true);
         gameUIManager.HideToolbar();
     }
 
@@ -96,6 +97,7 @@ public class NoteManager : MonoBehaviour
         SetNoteUI();
         noteText.GetComponent<TMP_Text>().text = noteInput.GetComponent<TMP_InputField>().text;
 
+        gameUIManager.SetNotesStatus(false);
         gameUIManager.ShowToolbar();
     }
 }

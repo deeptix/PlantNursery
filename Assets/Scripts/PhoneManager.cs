@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PhoneManager : MonoBehaviour
 {
@@ -37,6 +38,16 @@ public class PhoneManager : MonoBehaviour
 
     public void ShowPhone() {
         phone.SetActive(true); //TODO: animation
+    }
+
+    public void DeactivateCameraButton()
+    {
+        phone.transform.GetChild(0).GetComponent<Button>().interactable = false;
+    }
+
+    public void ActivateCameraButton()
+    {
+        phone.transform.GetChild(0).GetComponent<Button>().interactable = true;
     }
 
     public void ShowPhoneCamera() {

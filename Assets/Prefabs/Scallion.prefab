@@ -1,5 +1,86 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2694181806263301633
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5096816786631267582}
+  - component: {fileID: 4394597817887048206}
+  m_Layer: 0
+  m_Name: PotSoilMask
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5096816786631267582
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2694181806263301633}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.010231467, y: -0.20954937, z: 0}
+  m_LocalScale: {x: 0.97411424, y: 0.45176312, z: 0.45176312}
+  m_Children: []
+  m_Father: {fileID: 5261046092384643734}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!331 &4394597817887048206
+SpriteMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2694181806263301633}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10758, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 8177471321811730583, guid: 87aaca0a643d54397ba969dab4fc8875, type: 3}
+  m_MaskAlphaCutoff: 0.2
+  m_FrontSortingLayerID: 0
+  m_BackSortingLayerID: 0
+  m_FrontSortingLayer: 0
+  m_BackSortingLayer: 0
+  m_FrontSortingOrder: 3
+  m_BackSortingOrder: 2
+  m_IsCustomRangeActive: 1
+  m_SpriteSortPoint: 0
 --- !u!1 &5261046090355424715
 GameObject:
   m_ObjectHideFlags: 0
@@ -431,6 +512,7 @@ Transform:
   - {fileID: 5261046090355424712}
   - {fileID: 5261046090379826802}
   - {fileID: 5261046090872202611}
+  - {fileID: 5096816786631267582}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -485,6 +567,22 @@ MonoBehaviour:
       wateringInfo: 
       repottingInfo: 
       pottingInfo: 
+    tasks:
+      soilTask:
+        taskType: 0
+        plantType: 0
+        description: 
+        goalValue: 0
+      wateringTask:
+        taskType: 0
+        plantType: 0
+        description: 
+        goalValue: 0
+      sunlightTask:
+        taskType: 0
+        plantType: 0
+        description: 
+        goalValue: 0
     soil: 0
     sun: 0
     wateringSchedule: 0
@@ -492,11 +590,14 @@ MonoBehaviour:
     maxWater: 0
     growthSchedule: 
   age: 0
+  ageHealthy: 0
   healthState: 0
   growthState: 0
   water: 0
   soil: 0
   sun: 0
+  SUNLIGHT_ADJ: 0.1
+  SOIL_ADJ: 0.1
 --- !u!1001 &5261046092048022918
 PrefabInstance:
   m_ObjectHideFlags: 0

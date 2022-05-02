@@ -25,10 +25,8 @@ public class PhoneManager : MonoBehaviour
         showingPhone = !showingPhone;
         if (!showingPhone) {
             HidePhone();
-            // gameUIManager.ShowToolbar();
         } else {
             ShowPhone();
-            // gameUIManager.HideToolbar();
         }
     }
 

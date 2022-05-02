@@ -74,6 +74,7 @@ public class EncyclopediaManager : MonoBehaviour
 
     public void ClearDates() 
     {
+        plants = gameManager.GetAllPlants();
         plantGrowthDates = new Dictionary<PlantType, System.DateTime[]>();
 
         int i = 0;

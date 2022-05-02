@@ -19,8 +19,8 @@ public enum PlantType {
 public enum SoilTypes {
     Clay = 0,
     Loamy = 1,
-    Silty = 2,
-    Sandy = 3,
+    Sandy = 2,
+    Silty = 3,
 }
 
 // Various amounts of sunlight plants require

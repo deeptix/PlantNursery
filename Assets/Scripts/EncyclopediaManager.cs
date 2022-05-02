@@ -19,6 +19,7 @@ public class EncyclopediaManager : MonoBehaviour
 
     public Image[] soilIcons;
     public Image[] waterIcons;
+    public GameObject waterIndicator;
     public Image[] sunlightIcons;
 
     public GameObject[] plantStates;
@@ -32,11 +33,15 @@ public class EncyclopediaManager : MonoBehaviour
     private Dictionary<PlantType, int> plantIndices;
     private Dictionary<PlantType, Growth> maxPlantGrowth;
 
+    private const float MAX_WATER_AMT = 10;
+    private float indicatorMaxWidth;
+
     void Start() {
         // Loading track info from a JSON file
         phoneManager = GameObject.Find("PhoneManager").GetComponent<PhoneManager>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         plants = gameManager.GetAllPlants();
+        indicatorMaxWidth = waterIndicator.GetComponent<RectTransform>().sizeDelta.x;
 
         plantIndices = new Dictionary<PlantType, int>();
         maxPlantGrowth = new Dictionary<PlantType, Growth>();
@@ -115,14 +120,16 @@ public class EncyclopediaManager : MonoBehaviour
             soilIcons[(int)currentPlant.Soil].color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
         }
 
-        foreach (Image waterIcon in waterIcons) {
-            waterIcon.color = new Color(0.3f, 0.3f, 0.3f, 0.3f);
-        }
+        waterIndicator.GetComponent<RectTransform>().sizeDelta = new Vector2(0f, 0f);
 
         if (tasks.wateringTask.task != null && tasks.wateringTask.task.IsCompleted()) {
-            int avgWater = (int)Mathf.Round(currentPlant.maxWater + currentPlant.minWater) / 2;
-            int index = Mathf.Clamp(avgWater % 3, 0, waterIcons.Length - 1);
-            waterIcons[index].color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+            float minRatio = currentPlant.minWater / MAX_WATER_AMT;
+            float maxRatio = currentPlant.maxWater / MAX_WATER_AMT;
+            float avgRatio = (maxRatio + minRatio) / 2.0f;
+            Vector3 currentPos = waterIndicator.transform.localPosition;
+
+            waterIndicator.GetComponent<RectTransform>().sizeDelta = new Vector2((maxRatio - minRatio) * indicatorMaxWidth, 0f);
+            waterIndicator.transform.localPosition = new Vector3((minRatio * indicatorMaxWidth) - indicatorMaxWidth / 2, currentPos.y, currentPos.z);
         }
 
         foreach (Image sunlightIcon in sunlightIcons) {

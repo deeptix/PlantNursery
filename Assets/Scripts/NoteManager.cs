@@ -82,7 +82,6 @@ public class NoteManager : MonoBehaviour
         canvas.sortingOrder = newSortingOrder;
 
         gameUIManager.SetNotesStatus(true);
-        gameUIManager.HideToolbar();
     }
 
     public void ShrinkNote() {
@@ -101,6 +100,5 @@ public class NoteManager : MonoBehaviour
         noteText.GetComponent<TMP_Text>().text = noteInput.GetComponent<TMP_InputField>().text;
 
         gameUIManager.SetNotesStatus(false);
-        gameUIManager.ShowToolbar();
     }
 }

@@ -28,7 +28,7 @@ public class Calendar : MonoBehaviour
     int daysPassed;
 
     // Start is called before the first frame update
-    private void Start()
+    private void Awake()
     {
         nextButton.onClick.AddListener(NextMonth);
         prevButton.onClick.AddListener(PrevMonth);

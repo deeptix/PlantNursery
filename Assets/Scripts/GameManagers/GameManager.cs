@@ -34,6 +34,8 @@ public abstract class GameManager : MonoBehaviour
         }
 
         plantManagers = GameObject.FindObjectsOfType<PlantStateManager>();
+        GameObject.FindObjectOfType<EncyclopediaManager>().ClearDates();
+        
         EventBus.AddListener<PlantStateManager>(EventTypes.UpdatedPlant, CheckWinCondition);
 
         winConditions.SetActive(true);

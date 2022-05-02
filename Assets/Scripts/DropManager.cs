@@ -28,6 +28,7 @@ public class DropManager : MonoBehaviour
 
         DrawDropzoneBox();
         dropzoneArea.SetActive(false);
+        boxCollider2D.enabled = false;
     }
 
     void DrawDropzoneBox()
@@ -44,6 +45,8 @@ public class DropManager : MonoBehaviour
     void toggleCollider(bool isDragging, GameObject plantDropped)
     {
         dropzoneArea.SetActive(isDragging);
+        boxCollider2D.enabled = isDragging;
+
         if (!isDragging) {
             if (plantDropped == null) return;
             // if not holding a plant or was holding the plant that's being dragged, check if drop zone is colliding with the plant

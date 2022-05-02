@@ -8,9 +8,11 @@ using TMPro;
 public class EncyclopediaManager : MonoBehaviour
 {
     public GameObject encyclopediaPanel;
+    public GameObject plantInfoPage;
 
     public TMP_Text plantNameText;
     public Image plantImage;
+    public TMP_Text environText;
 
     public TMP_Text[] taskTexts;
     public Image[] taskCheckboxes;
@@ -18,10 +20,12 @@ public class EncyclopediaManager : MonoBehaviour
     public Sprite incompleteCheckbox;
 
     public Image[] soilIcons;
-    public Image[] waterIcons;
+    public GameObject waterIndicator;
     public Image[] sunlightIcons;
-
     public GameObject[] plantStates;
+    public TMP_Text[] plantDates;
+
+    public GameObject[] extraPages;
 
     private Plant[] plants;
     private int selectionIndex;
@@ -31,28 +35,56 @@ public class EncyclopediaManager : MonoBehaviour
 
     private Dictionary<PlantType, int> plantIndices;
     private Dictionary<PlantType, Growth> maxPlantGrowth;
+    private Dictionary<PlantType, System.DateTime[]> plantGrowthDates;
+
+    private const float MAX_WATER_AMT = 10;
+    private float indicatorMaxWidth;
 
     void Start() {
-        // Loading track info from a JSON file
         phoneManager = GameObject.Find("PhoneManager").GetComponent<PhoneManager>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         plants = gameManager.GetAllPlants();
+        indicatorMaxWidth = waterIndicator.GetComponent<RectTransform>().sizeDelta.x;
 
         plantIndices = new Dictionary<PlantType, int>();
         maxPlantGrowth = new Dictionary<PlantType, Growth>();
+        plantGrowthDates = new Dictionary<PlantType, System.DateTime[]>();
 
         int i = 0;
         foreach (Plant plant in plants) {
             plantIndices.Add(plant.plantType, i);
             maxPlantGrowth.Add(plant.plantType, Growth.Sprout);
+            
+            System.DateTime[] dates = new System.DateTime[4];
+            dates[0] = GameObject.FindObjectOfType<Calendar>().GetCurrentDate();
+            plantGrowthDates.Add(plant.plantType, dates);
             i++;
         }
 
         selectionIndex = 0;
         showingEncyclopedia = false;
+        foreach (TMP_Text date in plantDates) {
+            date.text = "";
+        }
+
         HideEncyclopedia();
 
         EventBus.AddListener<PlantStateManager>(EventTypes.AgedPlant, UpdateMaxGrowth);
+    }
+
+    public void ClearDates() 
+    {
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        plants = gameManager.GetAllPlants();
+        plantGrowthDates = new Dictionary<PlantType, System.DateTime[]>();
+
+        int i = 0;
+        foreach (Plant plant in plants) {
+            System.DateTime[] dates = new System.DateTime[4];
+            dates[0] = GameObject.FindObjectOfType<Calendar>().GetCurrentDate();
+            plantGrowthDates.Add(plant.plantType, dates);
+            i++;
+        }
     }
 
     public void UpdateMaxGrowth(PlantStateManager plant)
@@ -61,6 +93,10 @@ public class EncyclopediaManager : MonoBehaviour
         if (maxPlantGrowth.TryGetValue(plant.plantType, out plantGrowth)) {
             if ((int)plant.growthState > (int)plantGrowth) {
                 maxPlantGrowth[plant.plantType] = plant.growthState;
+
+                System.DateTime[] dates;
+                plantGrowthDates.TryGetValue(plant.plantType, out dates);
+                dates[(int)plant.growthState] = GameObject.FindObjectOfType<Calendar>().GetCurrentDate();
             }
         }
     }
@@ -96,12 +132,25 @@ public class EncyclopediaManager : MonoBehaviour
     }
 
     private void setCurrentScene() {
+        plantInfoPage.SetActive(false);
+        foreach (GameObject page in extraPages) {
+            page.SetActive(false);
+        }
+
+        if (selectionIndex >= plants.Length) {
+            extraPages[selectionIndex - plants.Length].SetActive(true);
+            return;
+        }
+
+        plantInfoPage.SetActive(true);
+
         Plant currentPlant = plants[selectionIndex];
         PlantTasks tasks = currentPlant.tasks;
 
         plantNameText.text = currentPlant.name;
         plantImage.preserveAspect = true;
         plantImage.sprite = currentPlant.PlantImage;
+        environText.text = currentPlant.description.environmentInfo;
 
         setTaskUI(tasks.soilTask, 0);
         setTaskUI(tasks.wateringTask, 1);
@@ -115,14 +164,16 @@ public class EncyclopediaManager : MonoBehaviour
             soilIcons[(int)currentPlant.Soil].color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
         }
 
-        foreach (Image waterIcon in waterIcons) {
-            waterIcon.color = new Color(0.3f, 0.3f, 0.3f, 0.3f);
-        }
+        waterIndicator.GetComponent<RectTransform>().sizeDelta = new Vector2(0f, 0f);
 
         if (tasks.wateringTask.task != null && tasks.wateringTask.task.IsCompleted()) {
-            int avgWater = (int)Mathf.Round(currentPlant.maxWater + currentPlant.minWater) / 2;
-            int index = Mathf.Clamp(avgWater % 3, 0, waterIcons.Length - 1);
-            waterIcons[index].color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+            float minRatio = currentPlant.minWater / MAX_WATER_AMT;
+            float maxRatio = currentPlant.maxWater / MAX_WATER_AMT;
+            float avgRatio = (maxRatio + minRatio) / 2.0f;
+            Vector3 currentPos = waterIndicator.transform.localPosition;
+
+            waterIndicator.GetComponent<RectTransform>().sizeDelta = new Vector2((maxRatio - minRatio) * indicatorMaxWidth, 0f);
+            waterIndicator.transform.localPosition = new Vector3((minRatio * indicatorMaxWidth) - indicatorMaxWidth / 2, currentPos.y, currentPos.z);
         }
 
         foreach (Image sunlightIcon in sunlightIcons) {
@@ -136,30 +187,36 @@ public class EncyclopediaManager : MonoBehaviour
         Growth plantGrowth;
         maxPlantGrowth.TryGetValue(currentPlant.plantType, out plantGrowth);
 
+        System.DateTime[] dates;
+        plantGrowthDates.TryGetValue(currentPlant.plantType, out dates);
+
         int i = 0;
         for (; i <= Mathf.Min((int)plantGrowth, plantStates.Length - 1); i++) {
             Sprite plantSprite = currentPlant.GetSprite((Growth)i, Health.Healthy);
             if (plantSprite != null) {
                 plantStates[i].SetActive(true);
                 plantStates[i].GetComponent<Image>().sprite = plantSprite;
+                plantDates[i].text = dates[i].ToString("m");
             } else {
                 plantStates[i].SetActive(false);
+                plantDates[i].text = "";
             }
         }
         for (; i < plantStates.Length; i++) {
             plantStates[i].SetActive(false);
+            plantDates[i].text = "";
         }
     }
 
     // Swaps to the next item in the list
     public void nextPlant() {
-        selectionIndex = (selectionIndex + 1) % plants.Length;
+        selectionIndex = (selectionIndex + 1) % (plants.Length + extraPages.Length);
         setCurrentScene();
     }
 
     // Swaps to the previous item in the list
     public void prevPlant() {
-        selectionIndex = (selectionIndex + plants.Length - 1) % plants.Length;
+        selectionIndex = (selectionIndex + (plants.Length + extraPages.Length) - 1) % (plants.Length + extraPages.Length);
         setCurrentScene();
     }
 

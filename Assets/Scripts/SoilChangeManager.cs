@@ -62,7 +62,7 @@ public class SoilChangeManager : MonoBehaviour
         switch (soil) 
         {
             case SoilTypes.Sandy:
-                newColor = new Color(0.26f, 0.22f, 0.13f, 1f);
+                newColor = new Color(0.69f, 0.51f, 0.10f, 1f);
                 settings.startColor = newColor;
                 break;
             case SoilTypes.Silty:
@@ -70,7 +70,7 @@ public class SoilChangeManager : MonoBehaviour
                 settings.startColor = newColor;
                 break;
             case SoilTypes.Loamy:
-                newColor = new Color(0.69f, 0.51f, 0.10f, 1f);
+                newColor = new Color(0.26f, 0.22f, 0.13f, 1f);
                 settings.startColor = newColor;
                 break;
             default:

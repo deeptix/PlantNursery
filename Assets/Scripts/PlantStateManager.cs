@@ -140,7 +140,7 @@ public class PlantStateManager : MonoBehaviour
     // Note: addWaterAmount can be the time duration in which the user watered the plant for
     public void waterPlant(float addWaterAmount) {
         water = Math.Min(water + addWaterAmount, MAX_WATER_AMT);
-        if (water >= idealWater) {
+        if (water >= 0.95 * requirements.maxWater) {
             drainManager.turnDrainageOn();
         }
         displayStats();

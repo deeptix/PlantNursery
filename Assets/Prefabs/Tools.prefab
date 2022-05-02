@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2185052136056566862
 Transform:
   m_ObjectHideFlags: 0
@@ -40,15 +40,15 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2185052136056566861}
   serializedVersion: 7
-  lengthInSec: 5
+  lengthInSec: 2
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
-  looping: 1
+  looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -115,7 +115,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 20
+      scalar: 2
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -168,7 +168,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 10
+      scalar: 15
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -20023,6 +20023,7 @@ Transform:
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 2185052136056566862}
+  - {fileID: 8334504135885371507}
   m_Father: {fileID: 4204590277921583013}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -20090,6 +20091,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallingWater: {fileID: 2185052136056566860}
+  mistDropsColliderPrefab: {fileID: 6586109143718188469, guid: 2ec833b1ce2d94e8eb282fca2cdfae90, type: 3}
+  mistDropsParent: {fileID: 8241621260140129647}
 --- !u!61 &4204590279151806587
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -20116,3 +20119,33 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.40713382, y: 0.76625216}
   m_EdgeRadius: 0
+--- !u!1 &8241621260140129647
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8334504135885371507}
+  m_Layer: 0
+  m_Name: MistDropsParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8334504135885371507
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8241621260140129647}
+  m_LocalRotation: {x: -0, y: -0, z: 0.0900892, w: 0.9959337}
+  m_LocalPosition: {x: -0.09500122, y: 0.355999, z: 0}
+  m_LocalScale: {x: 0.45004448, y: 0.4792718, z: 0.4335518}
+  m_Children: []
+  m_Father: {fileID: 4204590279151806586}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 10.337}

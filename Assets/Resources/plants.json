@@ -68,7 +68,7 @@
             "name": "Scallion",
             "imageName": "Scallion",
             "description": {
-                "environmentInfo": "Native to Asia but has been found growing in many parts of the world (warm climates)",
+                "environmentInfo": "Scallions live in sunny climates with fertile soil, and need around 1 inch of water per week.",
                 "soilInfo": "Well-drained soils (e.g. sandy loam, loam, and clay loams)",
                 "sunlightInfo": "Full sun (at least six hours of direct sunlight on most days)",
                 "wateringInfo": "About 1 inch of water per week (soil should be slightly moist)",
@@ -100,7 +100,7 @@
             "name": "Peace Lily",
             "imageName": "PeaceLily",
             "description": {
-                "environmentInfo": "Native to the tropical rainforests of South America (humid climates)",
+                "environmentInfo": "Peace Lilies grow wild in rainforests and require water at least twice a week.",
                 "soilInfo": "Prefers a soil that can mix drainage and moisture retention (e.g. perlite, peat moss, coir, or loam)",
                 "sunlightInfo": "Bright, indirect sunlight",
                 "wateringInfo": "Water once or twice per week (soil should be slightly moist)",
@@ -123,9 +123,9 @@
             },
             "soil": "Loamy",
             "sun": "Partial",
-            "wateringSchedule": 1,
-            "minWater": 6,
-            "maxWater": 8,
+            "wateringSchedule": 0.5,
+            "minWater": 5,
+            "maxWater": 7,
             "growthSchedule": ["2", "4", "8"]
         }
     ]

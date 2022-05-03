@@ -100,6 +100,13 @@ public class PlantStateManager : MonoBehaviour
 
         // Adding listeners
         EventBus.AddListener(EventTypes.DayPassed, new CallBack<int>(passTime));
+        EventBus.AddListener(EventTypes.FinishedLevel, new CallBack(RemoveAllListeners));
+    }
+
+    void RemoveAllListeners()
+    {
+        EventBus.RemoveListener<int>(EventTypes.DayPassed, passTime);
+        EventBus.RemoveListener(EventTypes.FinishedLevel, RemoveAllListeners);
     }
 
     // Updates Growth and Health states based on plant care + number of days skipped

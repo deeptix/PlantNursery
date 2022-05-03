@@ -20,6 +20,7 @@ public class DropManager : MonoBehaviour
     {
         Debug.Log("Drop Manager Start() is called");
         EventBus.AddListener(EventTypes.DraggingPlant, new CallBack<bool, GameObject>(toggleCollider));
+        EventBus.AddListener(EventTypes.FinishedLevel, new CallBack(RemoveAllListeners));
         if (plantHolding != null) updatePlantSun();
 
         dropzoneArea = Instantiate(dropzonePrefab);
@@ -30,6 +31,12 @@ public class DropManager : MonoBehaviour
         DrawDropzoneBox();
         dropzoneArea.SetActive(false);
         boxCollider2D.enabled = false;
+    }
+
+    void RemoveAllListeners()
+    {
+        EventBus.RemoveListener<bool, GameObject>(EventTypes.DraggingPlant, toggleCollider);
+        EventBus.RemoveListener(EventTypes.FinishedLevel, RemoveAllListeners);
     }
 
     void DrawDropzoneBox()

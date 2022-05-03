@@ -6,7 +6,7 @@ public class Water : MonoBehaviour
 {
     public float rotationAngle = 40;
     public ParticleSystem fallingWater;
-    private int WATERING_RATE = 5;
+    private int WATERING_RATE = 3;
 
     BoxCollider2D wateringCanCollider;
     Rigidbody2D rb;

@@ -97,6 +97,38 @@
             "growthSchedule": ["2", "4", "8"]
         },
         {
+            "name": "Aloe",
+            "imageName": "Aloe",
+            "description": {
+                "environmentInfo": "Native to Asia but has been found growing in many parts of the world (warm climates)",
+                "soilInfo": "Well-drained soils (e.g. sandy loam, loam, and clay loams)",
+                "sunlightInfo": "Full sun (at least six hours of direct sunlight on most days)",
+                "wateringInfo": "About 1 inch of water per week (soil should be slightly moist)",
+                "repottingInfo": "Can replant about every month for a continual harvest",
+                "pottingInfo": "Shallow pot that is no more than 6-8 inches deep"
+            },
+            "tasks": {
+                "soilTask": {
+                    "taskTypeName": "SoilQuota",
+                    "goalValue": 4
+                },
+                "wateringTask": {
+                    "taskTypeName": "WateringQuota",
+                    "goalValue": 10
+                },
+                "sunlightTask": {
+                    "taskTypeName": "SunlightQuota",
+                    "goalValue": 12
+                }
+            },
+            "soil": "Sandy",
+            "sun": "Sun",
+            "wateringSchedule": 2,
+            "minWater": 2,
+            "maxWater": 4,
+            "growthSchedule": ["3", "7", "14"]
+        },
+        {
             "name": "Peace Lily",
             "imageName": "PeaceLily",
             "description": {

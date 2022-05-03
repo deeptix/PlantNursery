@@ -16,4 +16,5 @@ public enum EventTypes
     AgedPlant,
     DraggingPlant,
     UpdatedPlant,       // Broadcasted when a plant's information is updated
+    FinishedLevel,      // Broadcasted when level is complete to remove dropzone listeners
 }

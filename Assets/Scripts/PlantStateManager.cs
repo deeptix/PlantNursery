@@ -28,9 +28,11 @@ public class PlantStateManager : MonoBehaviour
 {
 
     private GameManager gameManager;
+    private SoilChangeManager soilChangeManager;
     private RectTransform rectTransform;
     private DrainageManager drainManager;
     private SpriteRenderer spriteRenderer;
+    private SpriteRenderer soilRenderer;
     public Sprite[] plantSprites;
     public TMP_Text stats;
     public PlantType plantType;     // Plant type
@@ -68,25 +70,19 @@ public class PlantStateManager : MonoBehaviour
     void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        soilChangeManager = GameObject.Find("SoilManager").GetComponent<SoilChangeManager>();
         rectTransform = GetComponent<RectTransform>();
         drainManager = transform.Find("Pot").GetComponent<DrainageManager>();
 
         string childSpriteName = plantType.ToString() + "Plant";
         spriteRenderer = transform.Find(childSpriteName).GetComponent<SpriteRenderer>();
+        soilRenderer = transform.Find("Pot").transform.Find("Pot Top").GetComponent<SpriteRenderer>();
 
         // Store plant care requirements
         if (!gameManager.GetPlant(plantType, out requirements))
         {
             Debug.Log("Could not find plant.");
         }
-        // Plant starts as a healthy sprout with no soil
-        age = 0;
-        healthState = Health.Healthy;
-        growthState = Growth.Sprout;
-
-        // TODO: correctly initialize soil
-        // Currently initializes soil
-        soil = requirements.Soil;
 
         // Plant starts off with the minimum acceptable amount of water
         //      --> forces watering on the first day
@@ -99,8 +95,18 @@ public class PlantStateManager : MonoBehaviour
         // Display initial stats
         displayStats();
 
+        // Initialize color of sprite based on ageHealthy
+        updateHealthyColor(ageHealthy, 1);
+
         // Adding listeners
         EventBus.AddListener(EventTypes.DayPassed, new CallBack<int>(passTime));
+        EventBus.AddListener(EventTypes.FinishedLevel, new CallBack(RemoveAllListeners));
+    }
+
+    void RemoveAllListeners()
+    {
+        EventBus.RemoveListener<int>(EventTypes.DayPassed, passTime);
+        EventBus.RemoveListener(EventTypes.FinishedLevel, RemoveAllListeners);
     }
 
     // Updates Growth and Health states based on plant care + number of days skipped
@@ -140,7 +146,7 @@ public class PlantStateManager : MonoBehaviour
     // Note: addWaterAmount can be the time duration in which the user watered the plant for
     public void waterPlant(float addWaterAmount) {
         water = Math.Min(water + addWaterAmount, MAX_WATER_AMT);
-        if (water >= idealWater) {
+        if (water >= 0.95 * requirements.maxWater) {
             drainManager.turnDrainageOn();
         }
         displayStats();
@@ -149,20 +155,16 @@ public class PlantStateManager : MonoBehaviour
     public void movePlant(Sunlight newSun) {
         sun = newSun;
 
-        // just for debugging purposes --> updating here is unnecessary (only needs to be done in passTime)
         updateAbsorptionRate();
-
         displayStats();
     }
 
     // Updates the soil when user changes the soil
-    public void changeSoil(SoilTypes newSoil)
-    {
+    public void changeSoil(SoilTypes newSoil) {
         soil = newSoil;
+        soilRenderer.color = soilChangeManager.GetSoilColor(soil);
 
-        // just for debugging purposes --> updating here is unnecessary (only needs to be done in passTime)
         updateAbsorptionRate();
-
         displayStats();
     }
 
@@ -208,13 +210,13 @@ public class PlantStateManager : MonoBehaviour
     private float clampColor(float newColorComp, String color) {
         switch (color) {
             case "RED":
-                return Math.Min(Math.Max(LOWEST_RED_COLOR, newColorComp), 1);
+                return Mathf.Clamp(newColorComp, LOWEST_RED_COLOR, 1);
             case "GREEN":
-                return Math.Min(Math.Max(LOWEST_GREEN_COLOR, newColorComp), 1);
+                return Mathf.Clamp(newColorComp, LOWEST_GREEN_COLOR, 1);
             case "BLUE":
-                return Math.Min(Math.Max(LOWEST_BLUE_COLOR, newColorComp), 1);
+                return Mathf.Clamp(newColorComp, LOWEST_BLUE_COLOR, 1);
             default:
-                return Math.Min(Math.Max(0, newColorComp), 1);
+                return Mathf.Clamp(newColorComp, 0, 1);
         }
     }
 
@@ -230,35 +232,14 @@ public class PlantStateManager : MonoBehaviour
             float green = clampColor(currColor.g + multFactor * GREEN_ADJ, "GREEN");
             float blue = clampColor(currColor.b + multFactor * BLUE_ADJ, "BLUE");
             spriteRenderer.color = new Color(red, green, blue, currColor.a);
+            Debug.Log("New color: " + spriteRenderer.color.ToString());
         }
     }
 
     // Update health state based on water amount
-    private void updateHealthState(int numDays)
-    {
-        if (water < requirements.minWater)
-        {
+    private void updateHealthState(int numDays) {
+        if (water < requirements.minWater) {
             healthState = Health.Underwatered;
-            ageHealthy = 0;
-        }
-        else if (requirements.minWater <= water && water <= requirements.maxWater)
-        {
-            // if plant was previously healthy and still healthy, update number of healthy days
-            if (healthState == Health.Healthy)
-            {
-                ageHealthy += numDays;
-            }
-            healthState = Health.Healthy;
-        }
-        else
-        {
-            healthState = Health.Overwatered;
-            ageHealthy = 0;
-        }
-
-        // if plant's external conditions are not correct, stop growth by setting ageHealthy to 0
-        if (!correctExternalConditions())
-        {
             ageHealthy = Math.Min(0, ageHealthy - numDays);
             updateHealthyColor(numDays, -1);
         } else if (requirements.minWater <= water && water <= requirements.maxWater) {
@@ -272,7 +253,7 @@ public class PlantStateManager : MonoBehaviour
             ageHealthy = Math.Min(0, ageHealthy - numDays);
             updateHealthyColor(numDays, -1);
         }
-
+        
     }
 
     // Update growth state based on number of days in a healthy state according to growth schedule

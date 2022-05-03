@@ -38,44 +38,34 @@ public class SoilChangeManager : MonoBehaviour
         ChangeSoil();
     }
 
-    /*public SoilTypes GetSoilType(string name) {
-        string soilName = name.ToLower();
-        if (soilName.Equals("sand"))
-            return SoilTypes.Sandy;
-        else if (soilName.Equals("silt"))
-            return SoilTypes.Silty;
-        else if (soilName.Equals("loam"))
-            return SoilTypes.Loamy;
-        else
-            return SoilTypes.Clay;
-    }*/
-
     public SoilTypes GetSoilType() 
     {
         return soil;
     }
 
-    // Update is called once per frame
-    private void ChangeSoil()
+    public Color GetSoilColor(SoilTypes s) 
     {
         Color newColor;
-        switch (soil) 
+        switch (s) 
         {
             case SoilTypes.Sandy:
-                newColor = new Color(0.26f, 0.22f, 0.13f, 1f);
-                settings.startColor = newColor;
+                newColor = new Color(0.69f, 0.51f, 0.10f, 1f);
                 break;
             case SoilTypes.Silty:
-                newColor = new Color(0.18f, 0.16f, 0.13f, 1f);
-                settings.startColor = newColor;
+                newColor = new Color(0.52f, 0.49f, 0.42f, 1f);
                 break;
             case SoilTypes.Loamy:
-                newColor = new Color(0.69f, 0.51f, 0.10f, 1f);
-                settings.startColor = newColor;
+                newColor = new Color(0.26f, 0.22f, 0.13f, 1f);
                 break;
             default:
-                settings.startColor = Color.black;
+                newColor = Color.black;
                 break;
         }
+        return newColor;
+    }
+
+    private void ChangeSoil()
+    {
+        settings.startColor = GetSoilColor(soil);
     }
 }

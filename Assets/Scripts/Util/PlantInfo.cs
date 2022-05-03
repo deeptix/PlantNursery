@@ -11,7 +11,8 @@ public enum PlantType {
     DonkeysTail,
     SpiderPlant,
     Scallion,
-    PeaceLily
+    PeaceLily,
+    Aloe
 }
 
 // Various soil types plants require

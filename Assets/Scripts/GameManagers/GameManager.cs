@@ -50,6 +50,8 @@ public abstract class GameManager : MonoBehaviour
         UpdateStats(plant);
         if (HasWon()) {
             winScreen.SetActive(true);
+            EventBus.Broadcast(EventTypes.FinishedLevel);
+            EventBus.RemoveListener<PlantStateManager>(EventTypes.UpdatedPlant, CheckWinCondition);
         }
     }
 

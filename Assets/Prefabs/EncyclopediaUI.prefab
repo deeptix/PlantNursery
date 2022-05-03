@@ -410,7 +410,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Clay Soil
 
-'
+    Sticky, retains nutrients & water. Not much drainage.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 681f49f392bbf471bac70bffa61e4b8d, type: 2}
   m_sharedMaterial: {fileID: -6336919553118033474, guid: 681f49f392bbf471bac70bffa61e4b8d, type: 2}
@@ -744,7 +744,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Sandy Soil
 
-    Grainy, does not absorb water well'
+    Grainy, does not absorb water well.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 681f49f392bbf471bac70bffa61e4b8d, type: 2}
   m_sharedMaterial: {fileID: -6336919553118033474, guid: 681f49f392bbf471bac70bffa61e4b8d, type: 2}
@@ -4555,7 +4555,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Loamy Soil
+  m_text: 'Loamy Soil
+
+    Crumbly, retains nutrients & water. Good drainage.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 681f49f392bbf471bac70bffa61e4b8d, type: 2}
   m_sharedMaterial: {fileID: -6336919553118033474, guid: 681f49f392bbf471bac70bffa61e4b8d, type: 2}

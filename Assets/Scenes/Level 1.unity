@@ -13251,8 +13251,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4140838702678580167, guid: d4176e376d87a470ba14cae6369bbc38, type: 3}
       propertyPath: m_text
-      value: '- Raise one plant to its final growth state and maintain a healthy
-        condition for 2 weeks'
+      value: Raise one plant to its final growth state and maintain a healthy condition
+        for 2 weeks
       objectReference: {fileID: 0}
     - target: {fileID: 4140838702680930888, guid: d4176e376d87a470ba14cae6369bbc38, type: 3}
       propertyPath: m_SizeDelta.x

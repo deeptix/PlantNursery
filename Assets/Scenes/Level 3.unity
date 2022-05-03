@@ -7802,10 +7802,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8450360602243581539, guid: 9d9c34c2951b14a5f813caf5b910fb66, type: 3}
+      propertyPath: sun
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8450360602243581539, guid: 9d9c34c2951b14a5f813caf5b910fb66, type: 3}
+      propertyPath: ageHealthy
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8450360602243581539, guid: 9d9c34c2951b14a5f813caf5b910fb66, type: 3}
+      propertyPath: growthState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8450360602243581539, guid: 9d9c34c2951b14a5f813caf5b910fb66, type: 3}
+      propertyPath: healthState
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8450360602243581551, guid: 9d9c34c2951b14a5f813caf5b910fb66, type: 3}
       propertyPath: m_Name
       value: Aloe
       objectReference: {fileID: 0}
+    - target: {fileID: 8450360603291712135, guid: 9d9c34c2951b14a5f813caf5b910fb66, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 31a308a1a766c4515b3e979982ef05c1, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d9c34c2951b14a5f813caf5b910fb66, type: 3}
 --- !u!1 &923640584
@@ -8911,6 +8931,10 @@ PrefabInstance:
     - target: {fileID: 4140838701797404439, guid: d4176e376d87a470ba14cae6369bbc38, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 993634965}
+    - target: {fileID: 4140838701797404439, guid: d4176e376d87a470ba14cae6369bbc38, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HideWinConditions
       objectReference: {fileID: 0}
     - target: {fileID: 4140838702003862042, guid: d4176e376d87a470ba14cae6369bbc38, type: 3}
       propertyPath: m_Pivot.x
@@ -9018,8 +9042,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4140838702678580167, guid: d4176e376d87a470ba14cae6369bbc38, type: 3}
       propertyPath: m_text
-      value: '- Restore the Aloe Vera to a healthy state and raise to its final growth
-        state and maintain a healthy condition for 2 weeks'
+      value: Restore the Aloe Vera to a healthy state and raise to its final growth
+        state and maintain a healthy condition for 2 weeks
       objectReference: {fileID: 0}
     - target: {fileID: 4140838702680930888, guid: d4176e376d87a470ba14cae6369bbc38, type: 3}
       propertyPath: m_SizeDelta.x
@@ -9374,6 +9398,10 @@ PrefabInstance:
     - target: {fileID: 7737261121388449255, guid: 8d4fb802dfadd440d9636a89c431a230, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 993634965}
+    - target: {fileID: 7737261121388449255, guid: 8d4fb802dfadd440d9636a89c431a230, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: BackToLevelSelect
       objectReference: {fileID: 0}
     - target: {fileID: 7737261123298780772, guid: 8d4fb802dfadd440d9636a89c431a230, type: 3}
       propertyPath: m_Pivot.x

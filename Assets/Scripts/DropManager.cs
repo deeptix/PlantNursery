@@ -18,6 +18,7 @@ public class DropManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("Drop Manager Start() is called");
         EventBus.AddListener(EventTypes.DraggingPlant, new CallBack<bool, GameObject>(toggleCollider));
         if (plantHolding != null) updatePlantSun();
 

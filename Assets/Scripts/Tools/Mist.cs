@@ -29,7 +29,7 @@ public class Mist : MonoBehaviour
         mistDrops.transform.localPosition = Vector3.zero;
     }
 
-    // void OnMouseUp() 
+    // void OnMouseUp()
     // {
     //     fallingWater.gameObject.SetActive(false);
     // }
@@ -39,7 +39,7 @@ public class Mist : MonoBehaviour
     //     if (Input.GetMouseButton(0)) {
     //         LayerMask mask = LayerMask.GetMask("Plants");
     //         RaycastHit2D hit = Physics2D.Raycast(fallingWater.transform.position, Vector2.zero, Mathf.Infinity, mask);
- 
+
     //         if (hit.collider != null)
     //         {
     //             PlantStateManager plant = hit.transform.gameObject.GetComponent<PlantStateManager>();

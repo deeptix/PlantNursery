@@ -253,7 +253,7 @@ public class PlantStateManager : MonoBehaviour
             ageHealthy = Math.Min(0, ageHealthy - numDays);
             updateHealthyColor(numDays, -1);
         }
-        
+
     }
 
     // Update growth state based on number of days in a healthy state according to growth schedule
@@ -371,5 +371,30 @@ public class PlantStateManager : MonoBehaviour
     {
         string spriteName = getSpriteName();
         spriteRenderer.sprite = getSprite(spriteName);
+    }
+
+    public void ShowPolaroid()
+    {
+        // check zoomed out and notes not open
+        if (Camera.main.orthographicSize == 5 && !gameUIManager.GetNotesStatus())
+        {
+            polaroid.SetActive(true);
+            spriteRenderer.sprite = lastSeenSprite;
+            spriteRenderer.color = lastSeenColor;
+        }
+    }
+
+    public void HidePolaroid()
+    {
+        polaroid.SetActive(false);
+        spriteRenderer.sprite = currentSprite;
+        spriteRenderer.color = currentColor;
+    }
+
+    private void RemoveLastSeen()
+    {
+        polaroid.SetActive(false);
+        spriteRenderer.sprite = currentSprite;
+        spriteRenderer.color = currentColor;
     }
 }

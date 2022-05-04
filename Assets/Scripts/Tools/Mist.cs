@@ -22,7 +22,7 @@ public class Mist : MonoBehaviour
 
     void OnMouseDown()
     {
-        Debug.Log("spray water");
+        //Debug.Log("spray water");
         fallingWater.gameObject.SetActive(true);
         soundManager.PlayMistSound();
     }

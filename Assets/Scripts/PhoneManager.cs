@@ -10,9 +10,12 @@ public class PhoneManager : MonoBehaviour
     public GameObject phoneButton;
 
     private bool showingPhone;
+    private GameUIManager gameUIManager;
 
     void Start()
     {
+        gameUIManager = GameObject.Find("GameUIManager").GetComponent<GameUIManager>();
+
         showingPhone = false;
         HidePhoneCamera();
         HidePhone();

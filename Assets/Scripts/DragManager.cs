@@ -11,7 +11,7 @@ public class DragManager : MonoBehaviour
 
     public void OnMouseDown()
     {
-        //Debug.Log("Plant clicked!");
+        Debug.Log("Plant clicked!");
         if (!GetComponent<Zoom>().IsZoomed) {
             isMouseDown = true;
             Invoke(nameof(StartDragging), 0.5f);        

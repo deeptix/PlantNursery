@@ -28,7 +28,6 @@ public class PlantStateManager : MonoBehaviour
 {
 
     private GameManager gameManager;
-    private GameUIManager gameUIManager;
     private SoilChangeManager soilChangeManager;
     private RectTransform rectTransform;
     private DrainageManager drainManager;
@@ -47,13 +46,7 @@ public class PlantStateManager : MonoBehaviour
     public SoilTypes soil;          // Type of soil plant is in
     public Sunlight sun;            // Type of sun plant is in
     // public int temp;             // Temperature of plant environment
-    public GameObject polaroid;
-    public TMP_Text polaroidDate;
     private float idealWater;         // minWater + maxWater / 2
-    private Sprite lastSeenSprite; // last sprite seen before time skip
-    private Color lastSeenColor; // last color of plant before time skip
-    private Sprite currentSprite;
-    private Color currentColor;
 
     public float SUNLIGHT_ADJ = 0.1f; // Absorption adjustment for incorrect sunlight
     public float SOIL_ADJ = 0.1f;     // Absorption adjustment for incorrect soil
@@ -64,7 +57,7 @@ public class PlantStateManager : MonoBehaviour
     public float LOWEST_GREEN_COLOR = 0.1f;
     public float LOWEST_BLUE_COLOR = 0.1f;
 
-    public GameObject waterMeterNeedle;
+    public GameObject waterMeter;
 
     private const float MAX_WATER_AMT = 10;
 
@@ -77,8 +70,7 @@ public class PlantStateManager : MonoBehaviour
     void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        gameUIManager = GameObject.Find("GameUIManager").GetComponent<GameUIManager>();
-	soilChangeManager = GameObject.Find("SoilManager").GetComponent<SoilChangeManager>();
+        soilChangeManager = GameObject.Find("SoilManager").GetComponent<SoilChangeManager>();
         rectTransform = GetComponent<RectTransform>();
         drainManager = transform.Find("Pot").GetComponent<DrainageManager>();
 
@@ -109,12 +101,6 @@ public class PlantStateManager : MonoBehaviour
         // Adding listeners
         EventBus.AddListener(EventTypes.DayPassed, new CallBack<int>(passTime));
         EventBus.AddListener(EventTypes.FinishedLevel, new CallBack(RemoveAllListeners));
-        EventBus.AddListener(EventTypes.ZoomedIn, new CallBack(RemoveLastSeen));
-
-        lastSeenSprite = spriteRenderer.sprite;
-        lastSeenColor = spriteRenderer.color;
-        currentSprite = spriteRenderer.sprite;
-        currentColor = spriteRenderer.color;
     }
 
     void RemoveAllListeners()
@@ -126,12 +112,7 @@ public class PlantStateManager : MonoBehaviour
     // Updates Growth and Health states based on plant care + number of days skipped
     public void passTime(int numDays)
     {
-        // update last seens before passing time
-        lastSeenSprite = spriteRenderer.sprite;
-        lastSeenColor = spriteRenderer.color;
-        polaroidDate.text = numDays + " day(s) ago";
-
-	// Update overall plant age
+        // Update overall plant age
         age += numDays;
 
         // Update absorption rate based on external conditions
@@ -156,11 +137,6 @@ public class PlantStateManager : MonoBehaviour
 
         // Stop and clear any drainage as time is passing
         drainManager.clearDrainage();
-
-        // Save current sprites and color after passing time
-        currentSprite = spriteRenderer.sprite;
-        currentColor = spriteRenderer.color;
-    
     }
 
     /* Functions to update plant states based on user actions */
@@ -350,7 +326,7 @@ public class PlantStateManager : MonoBehaviour
     }
 
     public void displayWaterLevels() {
-        waterMeterNeedle.GetComponent<RectTransform>().rotation = Quaternion.Euler(0,0, (((water / MAX_WATER_AMT) * TOTAL_NEEDLE_ROT) - TOTAL_NEEDLE_ROT/2) * -1);
+        waterMeter.GetComponent<RectTransform>().sizeDelta = new Vector2 (0, water / MAX_WATER_AMT);
     }
 
     private string getSpriteName()
@@ -395,30 +371,5 @@ public class PlantStateManager : MonoBehaviour
     {
         string spriteName = getSpriteName();
         spriteRenderer.sprite = getSprite(spriteName);
-    }
-
-    public void ShowPolaroid()
-    {
-        // check zoomed out and notes not open
-        if (Camera.main.orthographicSize == 5 && !gameUIManager.GetNotesStatus())
-        {
-            polaroid.SetActive(true);
-            spriteRenderer.sprite = lastSeenSprite;
-            spriteRenderer.color = lastSeenColor;
-        }
-    }
-
-    public void HidePolaroid()
-    {
-        polaroid.SetActive(false);
-        spriteRenderer.sprite = currentSprite;
-        spriteRenderer.color = currentColor;
-    }
-
-    private void RemoveLastSeen() 
-    {
-        polaroid.SetActive(false);
-        spriteRenderer.sprite = currentSprite;
-        spriteRenderer.color = currentColor;
     }
 }

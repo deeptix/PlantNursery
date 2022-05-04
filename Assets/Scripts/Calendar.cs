@@ -13,10 +13,10 @@ public class Calendar : MonoBehaviour
     public Button dayButton;
 
     public TMP_Text monthText;
-    public int numberOfSkipDays = 7;
+    public int numberOfSkipDays = 2;
 
     [Header("Animation Settings")]
-    //public Animator celestialAnimator; TODO: Fix curved path of animation
+    public Animator celestialAnimator;
     public Animator dawnSkyAnimator;
     public Animator blueSkyAnimator;
     public int animationSpeed = 2;
@@ -43,7 +43,7 @@ public class Calendar : MonoBehaviour
     public void InitializeAnim()
     {
         Time.timeScale = 0;
-        //celestialAnimator.speed = animationSpeed;
+        celestialAnimator.speed = animationSpeed;
         dawnSkyAnimator.speed = animationSpeed;
         blueSkyAnimator.speed = animationSpeed;
         animationStarted = false;
@@ -167,9 +167,9 @@ public class Calendar : MonoBehaviour
     {
         this.daysPassed = daysPassed;
 
-        //celestialAnimator.SetTrigger("Start");
-        blueSkyAnimator.SetTrigger("Start");
+        celestialAnimator.SetTrigger("Start");
         dawnSkyAnimator.SetTrigger("Start");
+        blueSkyAnimator.SetTrigger("Start");
 
         // pause user actions and wait for day/night animation to finish
         VoidInteractables();

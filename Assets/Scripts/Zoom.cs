@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class Zoom : MonoBehaviour
+public class Zoom : MonoBehaviour, IPointerClickHandler
 {
-    float timerSinceLastClick = 0f;
+    //float timerSinceLastClick = 0f;
     private GameUIManager gameUIManager;
     private PhoneManager phoneManager;
 
@@ -20,42 +21,31 @@ public class Zoom : MonoBehaviour
         phoneManager.ActivateCameraButton();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (timerSinceLastClick != 0)
-            timerSinceLastClick = Mathf.Clamp(timerSinceLastClick - Time.deltaTime, 0, 1f);        
-    }
-
-    // Clicked on plant
-    void OnMouseDown()
+    public void OnPointerClick(PointerEventData pointerEventData)
     {
         // can zoom only if notes not open
-        if (!gameUIManager.GetNotesStatus())
+        if (!gameUIManager.GetNotesStatus() && pointerEventData.clickCount == 2) 
         {
-            if (timerSinceLastClick == 0)
-                timerSinceLastClick = 0.2f; // start timer
-            else // double clicked 
+            if (!IsZoomed)
             {
-                if (!IsZoomed)
-                {
-                    Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, -10);
-                    Camera.main.orthographicSize = 2.5f;
-                    gameUIManager.ShowToolbar();
-                    phoneManager.DeactivateCameraButton();
-                    phoneManager.HidePhoneButton(); // TODO: fix UI so this isn't disabled
-                    IsZoomed = true;
-                }
-                else
-                {
-                    Camera.main.transform.position = new Vector3(0, 0, -10);
-                    Camera.main.orthographicSize = 5;
-                    gameUIManager.HideToolbar();
-                    phoneManager.ActivateCameraButton();
-                    phoneManager.ShowPhoneButton(); // TODO: fix UI so this isn't disabled
-                    IsZoomed = false;
-                }
-                timerSinceLastClick = 0f; // reset timer
+                EventBus.Broadcast(EventTypes.ZoomedIn);
+
+                Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, -10);
+                Camera.main.orthographicSize = 2.5f;
+
+                gameUIManager.ShowToolbar();
+                phoneManager.DeactivateCameraButton();
+                phoneManager.HidePhoneButton(); // TODO: fix UI so this isn't disabled
+                IsZoomed = true;
+            }
+            else
+            {
+                Camera.main.transform.position = new Vector3(0, 0, -10);
+                Camera.main.orthographicSize = 5;
+                gameUIManager.HideToolbar();
+                phoneManager.ActivateCameraButton();
+                phoneManager.ShowPhoneButton(); // TODO: fix UI so this isn't disabled
+                IsZoomed = false;
             }
         }
     }

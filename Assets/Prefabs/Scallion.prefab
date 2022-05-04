@@ -560,7 +560,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0.27, y: 0.59}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1058, y: 661}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &1837916895545893041
@@ -1246,7 +1246,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1715830740890503009, guid: 52c9b0d199e294c33a39daf866481342, type: 3}
       propertyPath: m_Name
-      value: Soil
+      value: Pot Top
       objectReference: {fileID: 0}
     - target: {fileID: 1811348932094675125, guid: 52c9b0d199e294c33a39daf866481342, type: 3}
       propertyPath: m_Name
@@ -1262,7 +1262,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1811348932094675126, guid: 52c9b0d199e294c33a39daf866481342, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.22
+      value: -0.15
       objectReference: {fileID: 0}
     - target: {fileID: 1811348932094675126, guid: 52c9b0d199e294c33a39daf866481342, type: 3}
       propertyPath: m_LocalPosition.z

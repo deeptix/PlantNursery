@@ -28,6 +28,7 @@ public class PlantStateManager : MonoBehaviour
 {
 
     private GameManager gameManager;
+    private GameUIManager gameUIManager;
     private SoilChangeManager soilChangeManager;
     private RectTransform rectTransform;
     private DrainageManager drainManager;
@@ -46,6 +47,13 @@ public class PlantStateManager : MonoBehaviour
     public SoilTypes soil;          // Type of soil plant is in
     public Sunlight sun;            // Type of sun plant is in
     // public int temp;             // Temperature of plant environment
+    public GameObject polaroid;
+    public TMP_Text polaroidDate;
+    private Sprite lastSeenSprite; // last sprite seen before time skip
+    private Color lastSeenColor; // last color of plant before time skip
+    private Sprite currentSprite;
+    private Color currentColor;
+
     private float idealWater;         // minWater + maxWater / 2
 
     public float SUNLIGHT_ADJ = 0.1f; // Absorption adjustment for incorrect sunlight
@@ -56,8 +64,10 @@ public class PlantStateManager : MonoBehaviour
     public float LOWEST_RED_COLOR = 0.3f;
     public float LOWEST_GREEN_COLOR = 0.1f;
     public float LOWEST_BLUE_COLOR = 0.1f;
+    public float TOTAL_NEEDLE_ROT = 114; // Total Degree of Rotation (Z Axis)
 
-    public GameObject waterMeter;
+
+    public GameObject waterMeterNeedle;
 
     private const float MAX_WATER_AMT = 10;
 
@@ -83,6 +93,15 @@ public class PlantStateManager : MonoBehaviour
         {
             Debug.Log("Could not find plant.");
         }
+
+        // Plant starts as a healthy sprout with no soil
+        age = 0;
+        healthState = Health.Healthy;
+        growthState = Growth.Sprout;
+
+        // Currently initializes soil
+        soil = requirements.Soil;
+        changeSoil(soil);
 
         // Plant starts off with the minimum acceptable amount of water
         //      --> forces watering on the first day
@@ -326,7 +345,7 @@ public class PlantStateManager : MonoBehaviour
     }
 
     public void displayWaterLevels() {
-        waterMeter.GetComponent<RectTransform>().sizeDelta = new Vector2 (0, water / MAX_WATER_AMT);
+        waterMeterNeedle.GetComponent<RectTransform>().rotation = Quaternion.Euler(0,0, (((water / MAX_WATER_AMT) * TOTAL_NEEDLE_ROT) - TOTAL_NEEDLE_ROT/2) * -1);
     }
 
     private string getSpriteName()

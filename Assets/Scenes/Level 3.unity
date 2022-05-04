@@ -7764,11 +7764,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8450360602243581538, guid: 9d9c34c2951b14a5f813caf5b910fb66, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.95
+      value: 4.93
       objectReference: {fileID: 0}
     - target: {fileID: 8450360602243581538, guid: 9d9c34c2951b14a5f813caf5b910fb66, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.94
+      value: -1.36
       objectReference: {fileID: 0}
     - target: {fileID: 8450360602243581538, guid: 9d9c34c2951b14a5f813caf5b910fb66, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8360,7 +8360,6 @@ MonoBehaviour:
   dayButton: {fileID: 6662831719724292959, guid: 3fef3813afc319d4d9555130cae2344b, type: 3}
   monthText: {fileID: 774720324}
   numberOfSkipDays: 3
-  celestialAnimator: {fileID: 1859912970}
   dawnSkyAnimator: {fileID: 681029969}
   blueSkyAnimator: {fileID: 387495276}
   animationSpeed: 2

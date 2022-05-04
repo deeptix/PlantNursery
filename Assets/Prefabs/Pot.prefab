@@ -86,7 +86,7 @@ GameObject:
   - component: {fileID: 2928096306528453233}
   - component: {fileID: 6031005707820038372}
   m_Layer: 0
-  m_Name: soil
+  m_Name: Pot Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -282,8 +282,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3414822289552707429}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.00000005607587, y: -0.32, z: 0}
-  m_LocalScale: {x: 4, y: 2, z: 1}
+  m_LocalPosition: {x: -0.00000005607587, y: 0.16, z: 0}
+  m_LocalScale: {x: 2.56, y: 1.1026, z: 0.64}
   m_Children: []
   m_Father: {fileID: 1811348932094675126}
   m_RootOrder: 2
@@ -363,8 +363,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5774118066979754174}
   m_LocalRotation: {x: -0, y: -0, z: 0.07541502, w: 0.99715227}
-  m_LocalPosition: {x: -1.21, y: 3.33, z: -0.058094688}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
+  m_LocalPosition: {x: -1.07, y: 2.3, z: -0.058094688}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children:
   - {fileID: 5774118067547268027}
   m_Father: {fileID: 1811348932094675126}

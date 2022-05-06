@@ -426,7 +426,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 4
   m_TargetDisplay: 0
 --- !u!114 &4902592769690128811
 MonoBehaviour:
@@ -588,7 +588,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 8450360602243581539}
         m_TargetAssemblyTypeName: PlantStateManager, Assembly-CSharp
         m_MethodName: HidePolaroid
         m_Mode: 1
@@ -653,7 +653,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8450360602243581551}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.96, y: -1.4899999, z: 0}
+  m_LocalPosition: {x: -1.96, y: -1.4899999, z: -1}
   m_LocalScale: {x: 2.2135494, y: 2.2135494, z: 2.2135494}
   m_Children:
   - {fileID: 1575426653698473018}
@@ -740,6 +740,7 @@ MonoBehaviour:
   sun: 2
   polaroid: {fileID: 3174994056226573926}
   polaroidDate: {fileID: 5421412367189938968}
+  lastSeenButton: {fileID: 1768546718576324552}
   SUNLIGHT_ADJ: 0.1
   SOIL_ADJ: 0.1
   RED_ADJ: 0.2

@@ -1084,7 +1084,7 @@ PrefabInstance:
       objectReference: {fileID: 1745186148}
     - target: {fileID: 1837916895545893041, guid: 2dff3911599004039a804eb034a455f7, type: 3}
       propertyPath: m_SortingOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4014604205688832319, guid: 2dff3911599004039a804eb034a455f7, type: 3}
       propertyPath: m_LocalRotation.w

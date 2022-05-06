@@ -49,6 +49,7 @@ public class PlantStateManager : MonoBehaviour
     // public int temp;             // Temperature of plant environment
     public GameObject polaroid;
     public TMP_Text polaroidDate;
+    public Button lastSeenButton;
     private Sprite lastSeenSprite; // last sprite seen before time skip
     private Color lastSeenColor; // last color of plant before time skip
     private Sprite currentSprite;
@@ -80,6 +81,7 @@ public class PlantStateManager : MonoBehaviour
     void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        gameUIManager = GameObject.Find("GameUIManager").GetComponent<GameUIManager>();
         soilChangeManager = GameObject.Find("SoilManager").GetComponent<SoilChangeManager>();
         rectTransform = GetComponent<RectTransform>();
         drainManager = transform.Find("Pot").GetComponent<DrainageManager>();
@@ -120,6 +122,13 @@ public class PlantStateManager : MonoBehaviour
         // Adding listeners
         EventBus.AddListener(EventTypes.DayPassed, new CallBack<int>(passTime));
         EventBus.AddListener(EventTypes.FinishedLevel, new CallBack(RemoveAllListeners));
+        EventBus.AddListener(EventTypes.ZoomedIn, new CallBack(RemoveLastSeen));
+        EventBus.AddListener(EventTypes.ZoomedOut, new CallBack(ShowLastSeenButton));
+
+        lastSeenSprite = spriteRenderer.sprite;
+        lastSeenColor = spriteRenderer.color;
+        currentSprite = spriteRenderer.sprite;
+        currentColor = spriteRenderer.color;
     }
 
     void RemoveAllListeners()
@@ -131,6 +140,11 @@ public class PlantStateManager : MonoBehaviour
     // Updates Growth and Health states based on plant care + number of days skipped
     public void passTime(int numDays)
     {
+        // update last seens before passing time
+        lastSeenSprite = spriteRenderer.sprite;
+        lastSeenColor = spriteRenderer.color;
+        polaroidDate.text = numDays + " day(s) ago";
+
         // Update overall plant age
         age += numDays;
 
@@ -156,6 +170,10 @@ public class PlantStateManager : MonoBehaviour
 
         // Stop and clear any drainage as time is passing
         drainManager.clearDrainage();
+
+        // Save current sprites and color after passing time
+        currentSprite = spriteRenderer.sprite;
+        currentColor = spriteRenderer.color;
     }
 
     /* Functions to update plant states based on user actions */
@@ -410,9 +428,15 @@ public class PlantStateManager : MonoBehaviour
         spriteRenderer.color = currentColor;
     }
 
+    private void ShowLastSeenButton()
+    {
+        lastSeenButton.gameObject.SetActive(true);
+    }
+
     private void RemoveLastSeen()
     {
         polaroid.SetActive(false);
+        lastSeenButton.gameObject.SetActive(false);
         spriteRenderer.sprite = currentSprite;
         spriteRenderer.color = currentColor;
     }

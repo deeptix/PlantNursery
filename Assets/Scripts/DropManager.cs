@@ -18,7 +18,7 @@ public class DropManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("Drop Manager Start() is called");
+        //Debug.Log("Drop Manager Start() is called");
         EventBus.AddListener(EventTypes.DraggingPlant, new CallBack<bool, GameObject>(toggleCollider));
         EventBus.AddListener(EventTypes.FinishedLevel, new CallBack(RemoveAllListeners));
         if (plantHolding != null) updatePlantSun();
@@ -57,9 +57,10 @@ public class DropManager : MonoBehaviour
 
         if (!isDragging) {
             if (plantDropped == null) return;
+
             // if not holding a plant or was holding the plant that's being dragged, check if drop zone is colliding with the plant
             if (plantHolding == null || (plantHolding != null && plantHolding == plantDropped)) {
-                if (gameObject.GetComponent<BoxCollider2D>().IsTouching(plantDropped.GetComponent<BoxCollider2D>())) {
+                if (Vector3.Distance(plantDropped.transform.position, transform.position) < 2.0f) {
                     // collided! update plant holding accordingly
                     plantHolding = plantDropped;
                     updatePlantSun();

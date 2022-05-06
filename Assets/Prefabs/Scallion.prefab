@@ -582,7 +582,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 4
   m_TargetDisplay: 0
 --- !u!114 &2976660586792671293
 MonoBehaviour:
@@ -740,6 +740,7 @@ MonoBehaviour:
   sun: 2
   polaroid: {fileID: 1224179079024582118}
   polaroidDate: {fileID: 1266661043092129580}
+  lastSeenButton: {fileID: 1569546327443526822}
   SUNLIGHT_ADJ: 0.1
   SOIL_ADJ: 0.1
   RED_ADJ: 0.2

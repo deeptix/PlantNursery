@@ -40,6 +40,8 @@ public class Zoom : MonoBehaviour, IPointerClickHandler
             }
             else
             {
+                EventBus.Broadcast(EventTypes.ZoomedOut);
+
                 Camera.main.transform.position = new Vector3(0, 0, -10);
                 Camera.main.orthographicSize = 5;
                 gameUIManager.HideToolbar();
